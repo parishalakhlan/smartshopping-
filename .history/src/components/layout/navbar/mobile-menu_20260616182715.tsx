@@ -19,11 +19,7 @@ const navContainerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.05,
-      delayChildren: 0.08,
-      ease: "easeOut",
-    },
+    transition: { staggerChildren: 0.05, delayChildren: 0.08 },
   },
 };
 
@@ -32,7 +28,7 @@ const navLinkVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.35, ease: "easeOut" },
+    transition: { duration: 0.35, ease: [0.25, 1, 0.5, 1] },
   },
 };
 
