@@ -14,16 +14,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { NavbarLogo } from "./navbar-logo";
 import { navigationConfig, corporateConfig } from "@/config/navigation";
-
 const navContainerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.05,
-      delayChildren: 0.08,
-      ease: "easeOut",
-    },
+    transition: { staggerChildren: 0.05, delayChildren: 0.08 },
   },
 };
 
