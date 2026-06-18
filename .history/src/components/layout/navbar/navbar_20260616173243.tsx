@@ -38,7 +38,7 @@ export default function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Left Side Branding Zone */}
         <div className="flex-1 flex justify-start">
-          <NavbarLogo />
+          <NavbarLogo type="text" text="ARCHETYPE" />
         </div>
 
         {/* Center Inline Navigation Zone */}

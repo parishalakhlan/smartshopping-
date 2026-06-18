@@ -1,5 +1,12 @@
 import * as zod from "zod";
 // Define enum object
+const InquiryType = {
+  CUSTOMER_SUPPORT: "Customer Support",
+  PARTNERSHIP: "Partnership",
+  EXPANSION: "Expansion",
+  CAREERS: "Careers",
+  GENERAL_INQUIRY: "General Inquiry",
+} as const;
 
 export const contactFormSchema = zod.object({
   name: zod

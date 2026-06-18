@@ -27,12 +27,10 @@ const navLinkVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.35,
-      ease: "easeOut",
-    },
+    transition: { duration: 0.35, ease: "easeOut" },
   },
-} as const; // ← Add this
+};
+
 export const MobileMenu = memo(function MobileMenu() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
