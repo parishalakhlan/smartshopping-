@@ -2,45 +2,56 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 
 export function FinalCTA() {
   return (
-    <section className="py-32 lg:py-44 bg-[#111111] text-white px-4 sm:px-8 lg:px-16 text-center relative overflow-hidden">
-      {/* High impact structural color wash overlay matrix */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(31,77,69,0.25)_0%,transparent_65%)] pointer-events-none" />
-      <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#E65100] to-transparent" />
+    <section
+      id="brand-invitation"
+      className="py-28 sm:py-36 bg-[#163B65] text-white px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden"
+    >
+      {/* Premium Finish Subtle Gradient Overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(249,115,22,0.08)_0%,transparent_50%)] pointer-events-none" />
+      <div className="absolute bottom-0 inset-x-0 h-[1px] bg-white/10" />
 
-      <div className="max-w-4xl mx-auto relative z-10 space-y-10">
+      <div className="max-w-4xl mx-auto relative z-10 space-y-12">
+        {/* Core Layout Framing */}
         <div className="space-y-4">
-          <span className="text-xs font-luxury-meta tracking-[0.3em] text-[#E65100] font-bold block">
-            HUMAN CAPITAL CALL
+          <span className="text-[11px] font-sans font-bold tracking-[0.25em] text-[#F97316] block uppercase">
+            AN OPEN INVITATION
           </span>
-          <h2 className="text-4xl sm:text-6xl font-luxury-heading font-light tracking-tight text-white leading-tight">
-            Want to be part of <br />
-            our{" "}
-            <span className="font-normal italic text-[#1F4D45]">
-              Expansion?
-            </span>
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white font-bold tracking-tight leading-[1.15]">
+            Fashion Belongs Everywhere.
           </h2>
         </div>
 
-        <p className="text-sm sm:text-base text-white/60 font-light max-w-xl mx-auto leading-relaxed tracking-wide">
-          Connect with our talent acquisition team to explore leadership
-          positions across corporate management or flagship retail operations.
+        {/* Narrative Requirement Copy */}
+        <p className="font-sans text-base sm:text-lg text-white/80 font-normal max-w-2xl mx-auto leading-relaxed whitespace-normal break-words">
+          Discover the brands, experiences, and communities that continue
+          shaping the Smart Shopping story.
         </p>
 
-        <motion.div
-          whileHover={{ scale: 1.01 }}
-          whileTap={{ scale: 0.99 }}
-          className="inline-block pt-4"
-        >
-          <Button className="h-14 bg-white hover:bg-[#EAEAEA] text-[#111111] font-luxury-nav tracking-widest px-12 rounded-none border-0 flex items-center gap-3 transition-all duration-300 shadow-xl font-bold cursor-pointer">
-            <span>JOIN THE TALENT NETWORK</span>
-            <ArrowUpRight className="w-4 h-4 text-[#E65100] stroke-[2]" />
-          </Button>
-        </motion.div>
+        {/* Dual Button Layout Alignment */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 max-w-md mx-auto w-full font-sans">
+          <motion.a
+            href="#explore-brands"
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full sm:w-auto h-12 inline-flex items-center justify-center bg-[#F97316] hover:bg-[#EA580C] text-white text-xs font-bold tracking-widest px-8 transition-colors duration-300 uppercase shrink-0"
+          >
+            <span>Explore Brands</span>
+          </motion.a>
+
+          <motion.a
+            href="#find-store"
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full sm:w-auto h-12 inline-flex items-center justify-center bg-transparent hover:bg-white/5 text-white border border-white/30 hover:border-white text-xs font-bold tracking-widest px-8 transition-colors duration-300 uppercase gap-2 shrink-0"
+          >
+            <span>Find A Store</span>
+            <ArrowUpRight className="w-3.5 h-3.5 stroke-[2] opacity-80" />
+          </motion.a>
+        </div>
       </div>
     </section>
   );

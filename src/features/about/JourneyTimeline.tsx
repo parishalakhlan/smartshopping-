@@ -1,128 +1,86 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
-
-const milestones = [
-  {
-    year: "2009",
-    title: "Genesis Footprint",
-    area: "Sirsa Flagship",
-    desc: "Launches the conceptual foundation with a premium high-street apparel environment designed to test regional appetite.",
-  },
-  {
-    year: "2011",
-    title: "Portfolio Integration",
-    area: "Brand Partnerships",
-    desc: "Secures major distribution frameworks with tier-1 international labels, elevating product range quality.",
-  },
-  {
-    year: "2013",
-    title: "Regional Multiplication",
-    area: "Territory Scaling",
-    desc: "Bridges logistical pipelines across adjacent fashion corridors, doubling floor footprints within six months.",
-  },
-  {
-    year: "2015",
-    title: "Lifestyle Networks",
-    area: "New Sub-Brands",
-    desc: "Deploys targeted standalone everyday casualwear segments answering rising consumer lifestyle trends.",
-  },
-  {
-    year: "2018",
-    title: "Sovereign Crossings",
-    area: "Multi-State Expansion",
-    desc: "Inaugurates operational storefront flags outside baseline state limits, expanding into 12 tier-2 and tier-3 city hubs.",
-  },
-  {
-    year: "2022",
-    title: "Logistical Superhub",
-    area: "Supply Chain Velocity",
-    desc: "Deploys automated distribution centers driving frictionless, high-velocity stock turnarounds regional-wide.",
-  },
-  {
-    year: "2026",
-    title: "The 27+ Store Collective",
-    area: "Omni-Channel Authority",
-    desc: "Solidifies corporate control parameters as North India's benchmark multi-brand fashion powerhouse.",
-  },
-];
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 
 export function JourneyTimeline() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+
   return (
-    <section className="py-24 lg:py-32 bg-background-secondary px-4 sm:px-8 lg:px-16 relative overflow-hidden">
-      {/* Editorial Title Block */}
-      <div className="max-w-4xl mx-auto text-center mb-20 sm:mb-28">
-        <span className="text-xs font-luxury-meta tracking-[0.25em] text-accent font-semibold block uppercase">
-          HISTORIC SCALE MATRIX
-        </span>
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-luxury-heading tracking-tight mt-3 text-text-primary">
-          The Growth Journey
-        </h2>
-        <div className="w-12 h-[1px] bg-accent/40 mx-auto mt-6" />
-      </div>
+    <section
+      ref={containerRef}
+      id="the-shift"
+      className="py-24 sm:py-32 bg-[#FFFFFF] overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Left Block: Immersive Structural Narrative Frame */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.85, ease: [0.25, 1, 0.5, 1] }}
+            className="lg:col-span-6 space-y-6 font-sans"
+          >
+            <span className="text-[#F97316] font-sans font-semibold tracking-[0.25em] text-xs uppercase block">
+              SECTION 03 // THE SHIFT
+            </span>
+            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#163B65] font-bold tracking-tight leading-[1.12]">
+              What If Great Fashion <br />
+              Could Feel Local?
+            </h2>
 
-      <div className="max-w-5xl mx-auto relative">
-        {/* Visible, High-Contrast Structural Center Track Line */}
-        <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-border-main md:-translate-x-1/2 z-0" />
+            <div className="text-[#475569] text-base sm:text-lg leading-relaxed space-y-6 font-normal pt-4 max-w-xl">
+              <p>
+                The foundational turning point wasn&apos;t simply opening
+                logistical storefront outposts or counting square footage. It
+                was a radical reconfiguration of standard retail hierarchy.
+              </p>
+              <p className="text-[#0F172A] font-medium">
+                The objective was bringing world-class lifestyle curation,
+                authentic material depth, and premium immersive environments
+                directly to the communities that rightfully deserved them.
+              </p>
+              <p className="text-sm sm:text-base opacity-90">
+                By bypassing traditional metropolitan centralizations, we
+                realized that fashion accessibility alters more than style
+                patterns—it completely redefines the landscape of local pride.
+              </p>
+            </div>
+          </motion.div>
 
-        <div className="space-y-12 md:space-y-20">
-          {milestones.map((item, idx) => {
-            const isLeft = idx % 2 === 0;
-            return (
-              <div
-                key={item.year}
-                className={`flex flex-col md:flex-row relative items-start ${
-                  isLeft ? "md:flex-row-reverse" : ""
-                }`}
-              >
-                {/* Precision Interactive Node Marker on the timeline path */}
-                <motion.div
-                  initial={{ scale: 0.6, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="absolute left-4 md:left-1/2 w-3.5 h-3.5 rounded-full bg-accent -translate-x-1/2 mt-6 z-20 shadow-md ring-4 ring-background-secondary"
-                />
+          {/* Right Block: Subtle Dual Motion Layer Imagery Depth */}
+          <div className="lg:col-span-6 relative w-full aspect-square sm:aspect-[4/3] lg:aspect-[5/4]">
+            {/* Background Primary Accent Layer */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, x: 20 }}
+              animate={isInView ? { opacity: 0.15, scale: 1, x: 0 } : {}}
+              transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1] }}
+              className="absolute inset-0 bg-[#163B65] translate-x-4 translate-y-4"
+            />
 
-                {/* Narrative Card Module */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-120px" }}
-                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="w-full md:w-1/2 pl-10 md:pl-0"
-                >
-                  <div
-                    className={`bg-background-main p-6 sm:p-8 border border-border-main shadow-sm group hover:shadow-md hover:border-accent/60 transition-all duration-300 relative ${
-                      isLeft ? "md:ml-10" : "md:mr-10"
-                    }`}
-                  >
-                    {/* Header line ensuring high readability for the Year and Area */}
-                    <div className="flex items-center justify-between border-b border-border-main pb-3 mb-4">
-                      <span className="text-[11px] uppercase font-luxury-meta tracking-widest text-accent font-semibold">
-                        {item.area}
-                      </span>
-                      <span className="text-sm font-serif font-bold text-text-primary px-2.5 py-0.5 bg-background-secondary border border-border-main rounded">
-                        {item.year}
-                      </span>
-                    </div>
-
-                    <h3 className="text-lg font-luxury-heading tracking-wide text-text-primary mb-2">
-                      {item.title}
-                    </h3>
-
-                    <p className="text-sm text-text-secondary font-light leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Mirror Balance Frame Container */}
-                <div className="hidden md:block w-1/2" />
-              </div>
-            );
-          })}
+            {/* Main Editorial Visual Display Container */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{
+                duration: 0.95,
+                delay: 0.1,
+                ease: [0.25, 1, 0.5, 1],
+              }}
+              className="relative w-full h-full overflow-hidden border border-[#163B65]/10 bg-[#F5F2EC]"
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80"
+                alt="Smart Shopping spatial interior experience"
+                fill
+                sizes="(max-w-7xl) 100vw, 50vw"
+                className="object-cover grayscale contrast-[1.03] brightness-[0.97]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#163B65]/20 to-transparent pointer-events-none" />
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

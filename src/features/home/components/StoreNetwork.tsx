@@ -1,109 +1,104 @@
+"use client";
+
 import Link from "next/link";
-import { MapPin, ArrowRight, Phone } from "lucide-react";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { ArrowRight, MapPin } from "lucide-react";
+
+// Turn Next.js Link into a motion-compatible component
+const MotionLink = motion.create(Link);
 
 export default function StoreNetwork() {
   return (
-    <section className="py-24 bg-[#FFFFFF] border-b border-[#E2E8F0]">
+    <section className="py-24 sm:py-32 bg-[#FFFFFF] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          {/* Left Column: Map Visual Container Representation */}
-          <div className="lg:col-span-6 bg-[#F8FAFC] border border-[#E2E8F0] p-8 relative overflow-hidden min-h-[400px] flex flex-col justify-between rounded-sm">
-            <div>
-              <span className="text-xs uppercase font-sans tracking-[0.2em] text-[#163B65] font-bold block mb-4">
-                REGIONAL COVERAGE VISUALIZATION
-              </span>
+          {/* Left Column: Architectural Framing Canvas with Embedded Detail Pin */}
+          <div className="lg:col-span-6 relative aspect-[4/5] w-full bg-[#F5F2EC] overflow-hidden">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 1.4, ease: [0.25, 1, 0.5, 1] }}
+              className="relative w-full h-full"
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop"
+                alt="Premium Concept Store Architecture"
+                fill
+                sizes="(max-w-1024px) 100vw, 45vw"
+                className="object-cover object-center brightness-[0.92] contrast-[1.02]"
+                priority
+              />
+            </motion.div>
 
-              {/* Coverage Lists */}
-              <div className="space-y-4 mt-6">
-                <div className="flex justify-between items-center py-2 border-b border-slate-200">
-                  <span className="font-sans font-medium text-slate-800">
-                    Punjab
-                  </span>
-                  <span className="font-mono text-xs bg-[#163B65]/10 text-[#163B65] px-2 py-1 rounded-sm">
-                    11 Hubs
-                  </span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-slate-200">
-                  <span className="font-sans font-medium text-slate-800">
-                    Haryana
-                  </span>
-                  <span className="font-mono text-xs bg-[#163B65]/10 text-[#163B65] px-2 py-1 rounded-sm">
-                    8 Hubs
-                  </span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-slate-200">
-                  <span className="font-sans font-medium text-slate-800">
-                    Rajasthan
-                  </span>
-                  <span className="font-mono text-xs bg-[#163B65]/10 text-[#163B65] px-2 py-1 rounded-sm">
-                    5 Hubs
-                  </span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-slate-200">
-                  <span className="font-sans font-medium text-slate-800">
-                    Other Territories
-                  </span>
-                  <span className="font-mono text-xs bg-[#163B65]/10 text-[#163B65] px-2 py-1 rounded-sm">
-                    3 Hubs
-                  </span>
-                </div>
-              </div>
+            {/* Premium Floated Location Tag */}
+            <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-4 py-3 shadow-sm inline-flex items-center gap-x-2.5 max-w-[280px]">
+              <MapPin className="w-3.5 h-3.5 text-[#F97316] shrink-0" />
+              <p className="font-sans text-[11px] font-bold tracking-wider uppercase text-[#163B65] truncate">
+                Flagship Concept • Sector 17
+              </p>
             </div>
 
-            <div className="pt-6 font-sans text-xs text-slate-400 italic">
-              * Fully managed corporate high-street locations & premier premium
-              mall spaces.
-            </div>
+            {/* Ambient Overlay Vignette */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/10 via-transparent to-transparent pointer-events-none" />
           </div>
 
-          {/* Right Column: Text Information & Actions */}
-          <div className="lg:col-span-6">
-            <span className="text-[#F97316] font-sans font-semibold tracking-wider text-sm uppercase block mb-3">
-              RETAIL FOOTPRINT
+          {/* Right Column: Balanced Editorial Narrative & Refined Triggers */}
+          <div className="lg:col-span-6 flex flex-col justify-center">
+            <span className="text-[#F97316] font-sans font-medium tracking-[0.2em] text-xs uppercase block mb-4">
+              Retail Footprint
             </span>
-            <h2 className="font-serif text-3xl sm:text-5xl text-[#0F172A] font-normal mb-4">
-              Find Your Nearest Store
+
+            <h2 className="font-serif text-4xl sm:text-5xl text-[#163B65] font-bold tracking-tight leading-[1.1] mb-6 break-words whitespace-normal">
+              Find Your Nearest <br />
+              Fashion Destination.
             </h2>
-            <p className="font-sans text-slate-600 text-base sm:text-lg mb-8 font-light leading-relaxed">
-              Explore our growing network of fashion destinations across North
-              India. Experience international brand standards directly inside
-              your local city ecosystem.
+
+            <p className="font-sans text-[#475569] text-base sm:text-lg mb-10 leading-relaxed max-w-xl break-words whitespace-normal">
+              Explore our highly considered network of physical spaces spanning
+              regional culture hubs across Punjab, Haryana, and Rajasthan. Each
+              showroom introduces curated international brand standards directly
+              to your local neighborhood.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 mb-8 font-sans">
+            {/* Regional Focus Highlights */}
+            <div className="border-t border-[#F5F2EC] pt-8 mb-12 grid grid-cols-1 sm:grid-cols-2 gap-6 w-full font-sans">
               <div>
-                <h4 className="font-semibold text-slate-800 text-sm uppercase tracking-wider mb-1">
-                  Key Hubs
+                <h4 className="font-bold text-[#0F172A] text-xs uppercase tracking-widest mb-2">
+                  Primary Enclaves
                 </h4>
-                <p className="text-sm text-slate-500 font-light">
-                  Amritsar, Jalandhar, Ludhiana, Udaipur, Kota
+                <p className="text-sm text-[#475569] leading-relaxed font-normal">
+                  Amritsar, Jalandhar, Ludhiana, Jaipur, Udaipur, and Kota.
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-slate-800 text-sm uppercase tracking-wider mb-1">
-                  Indicators
+                <h4 className="font-bold text-[#0F172A] text-xs uppercase tracking-widest mb-2">
+                  Environment
                 </h4>
-                <p className="text-sm text-slate-500 font-light">
-                  100% Client satisfaction across verified touchpoints
+                <p className="text-sm text-[#475569] leading-relaxed font-normal">
+                  Immersive architecture tailored to premium brand experiences.
                 </p>
               </div>
             </div>
 
-            {/* CTAs connecting core workflow paths */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
+            {/* Premium Action Row */}
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+              {/* Clean Next.js 14/15/16 Link handling with motion parameters wrapper */}
+              <MotionLink
                 href="/store-locator"
-                className="inline-flex items-center justify-center px-6 py-3.5 bg-[#163B65] hover:bg-[#214f84] text-white font-sans text-sm font-medium tracking-wider uppercase transition-colors rounded-sm"
+                whileHover={{ x: 4 }}
+                className="inline-flex items-center gap-x-3 font-sans text-xs sm:text-sm font-bold tracking-widest uppercase text-[#163B65] group transition-all"
               >
-                <MapPin className="w-4 h-4 mr-2 text-[#F97316]" />
-                Explore Store Locator
-              </Link>
+                <span>Launch Store Locator</span>
+                <div className="w-9 h-9 rounded-full bg-[#F5F2EC] flex items-center justify-center text-[#163B65] group-hover:bg-[#163B65] group-hover:text-white transition-colors duration-300">
+                  <ArrowRight className="w-4 h-4 shrink-0" />
+                </div>
+              </MotionLink>
+
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center px-6 py-3.5 bg-transparent border border-[#E2E8F0] hover:bg-[#F8FAFC] text-[#0F172A] font-sans text-sm font-medium tracking-wider uppercase transition-colors rounded-sm"
+                className="font-sans text-xs sm:text-sm font-bold tracking-widest uppercase text-[#475569] hover:text-[#0F172A] transition-colors py-2"
               >
-                <Phone className="w-4 h-4 mr-2 text-slate-400" />
-                Contact Us
+                Private Appointments
               </Link>
             </div>
           </div>

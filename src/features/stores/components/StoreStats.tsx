@@ -1,75 +1,79 @@
 // src/features/stores/components/StoreStats.tsx
 import React from "react";
-import { Milestone, Users2, Layers3, Globe2 } from "lucide-react";
+import { MapPin, Globe2, Sparkles, Navigation } from "lucide-react";
 
 export function StoreStats() {
   return (
-    <section className="bg-white py-12 lg:py-16 px-4 sm:px-6 lg:px-8 border-y border-[var(--color-border-main)]">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8">
-        <div className="flex gap-4 items-start p-2">
-          <div className="p-3 bg-orange-50 rounded-lg text-[var(--color-accent)] shrink-0">
-            <Milestone className="w-6 h-6" />
+    <section className="bg-[#FFFFFF] py-16 lg:py-20 px-4 sm:px-6 lg:px-8 border-y border-[#163B65]/10 font-sans">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        {/* Stat Item 01 */}
+        <div className="flex gap-4 items-start p-2 text-left group">
+          <div className="p-3 bg-[#F5F2EC] text-[#163B65] group-hover:text-[#F97316] transition-colors duration-300 rounded-none shrink-0">
+            <MapPin className="w-5 h-5" />
           </div>
-          <div>
-            <span className="block text-3xl font-bold text-[var(--color-accent)] font-serif leading-none">
+          <div className="space-y-1">
+            <span className="block text-3xl sm:text-4xl font-bold text-[#163B65] font-serif tracking-tight leading-none">
               25+
             </span>
-            <span className="block text-xs font-bold text-[var(--color-primary)] mt-1 uppercase tracking-wider">
+            <span className="block text-[10px] font-bold text-[#F97316] uppercase tracking-widest">
               Showrooms Live
             </span>
-            <span className="text-[11px] text-slate-400 block mt-0.5 font-sans">
-              Premium physical storefronts.
+            <span className="text-xs text-[#475569] block leading-relaxed">
+              Curated, premium physical storefronts.
             </span>
           </div>
         </div>
 
-        <div className="flex gap-4 items-start p-2">
-          <div className="p-3 bg-blue-50 rounded-lg text-[var(--color-primary)] shrink-0">
-            <Globe2 className="w-6 h-6" />
+        {/* Stat Item 02 */}
+        <div className="flex gap-4 items-start p-2 text-left group">
+          <div className="p-3 bg-[#F5F2EC] text-[#163B65] group-hover:text-[#F97316] transition-colors duration-300 rounded-none shrink-0">
+            <Globe2 className="w-5 h-5" />
           </div>
-          <div>
-            <span className="block text-3xl font-bold text-[var(--color-primary)] font-serif leading-none">
+          <div className="space-y-1">
+            <span className="block text-3xl sm:text-4xl font-bold text-[#163B65] font-serif tracking-tight leading-none">
               8
             </span>
-            <span className="block text-xs font-bold text-[var(--color-primary)] mt-1 uppercase tracking-wider">
+            <span className="block text-[10px] font-bold text-[#163B65] uppercase tracking-widest">
               Global Brands
             </span>
-            <span className="text-[11px] text-slate-400 block mt-0.5 font-sans">
-              Authorized direct franchise tier mix.
+            <span className="text-xs text-[#475569] block leading-relaxed">
+              International design houses housed under one floor.
             </span>
           </div>
         </div>
 
-        <div className="flex gap-4 items-start p-2">
-          <div className="p-3 bg-emerald-50 rounded-lg text-emerald-600 shrink-0">
-            <Users2 className="w-6 h-6" />
+        {/* Stat Item 03 */}
+        <div className="flex gap-4 items-start p-2 text-left group">
+          <div className="p-3 bg-[#F5F2EC] text-[#163B65] group-hover:text-[#F97316] transition-colors duration-300 rounded-none shrink-0">
+            <Sparkles className="w-5 h-5" />
           </div>
-          <div>
-            <span className="block text-3xl font-bold text-emerald-600 font-serif leading-none">
-              50,000+
+          <div className="space-y-1">
+            <span className="block text-3xl sm:text-4xl font-bold text-[#163B65] font-serif tracking-tight leading-none">
+              50k+
             </span>
-            <span className="block text-xs font-bold text-[var(--color-primary)] mt-1 uppercase tracking-wider">
+            <span className="block text-[10px] font-bold text-[#163B65] uppercase tracking-widest">
               Clients Served
             </span>
-            <span className="text-[11px] text-slate-400 block mt-0.5 font-sans">
-              High volume family demographic base.
+            <span className="text-xs text-[#475569] block leading-relaxed">
+              Providing personalized attention and dedicated styling.
             </span>
           </div>
         </div>
 
-        <div className="flex gap-4 items-start p-2">
-          <div className="p-3 bg-purple-50 rounded-lg text-purple-600 shrink-0">
-            <Layers3 className="w-6 h-6" />
+        {/* Stat Item 04 */}
+        <div className="flex gap-4 items-start p-2 text-left group">
+          <div className="p-3 bg-[#F5F2EC] text-[#163B65] group-hover:text-[#F97316] transition-colors duration-300 rounded-none shrink-0">
+            <Navigation className="w-5 h-5" />
           </div>
-          <div>
-            <span className="block text-3xl font-bold text-purple-600 font-serif leading-none">
+          <div className="space-y-1">
+            <span className="block text-3xl sm:text-4xl font-bold text-[#163B65] font-serif tracking-tight leading-none">
               5 States
             </span>
-            <span className="block text-xs font-bold text-[var(--color-primary)] mt-1 uppercase tracking-wider">
-              Territory Coverage
+            <span className="block text-[10px] font-bold text-[#163B65] uppercase tracking-widest">
+              Territories Open
             </span>
-            <span className="text-[11px] text-slate-400 block mt-0.5 font-sans">
-              Logistical supply chain validation.
+            <span className="text-xs text-[#475569] block leading-relaxed">
+              Expansive presence spanning key regional luxury markets.
             </span>
           </div>
         </div>

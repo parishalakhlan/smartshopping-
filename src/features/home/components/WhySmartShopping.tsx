@@ -1,86 +1,118 @@
-import Link from "next/link";
-import {
-  GraduationCap,
-  Award,
-  Heart,
-  ShieldAlert,
-  ArrowRight,
-} from "lucide-react";
+"use client";
 
-const PILLARS = [
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+
+const EDITORIAL_PILLARS = [
   {
-    icon: GraduationCap,
-    title: "SKILL UP Initiative",
-    desc: "Continuous corporate training and retail certification programs transforming regional youth execution styles.",
+    tag: "Aesthetic // 01",
+    title: "International Curation",
+    desc: "Bringing world-renowned contemporary silhouettes and clean fabric expressions directly to local regional hubs.",
   },
   {
-    icon: Award,
-    title: "Rewards & Recognition",
-    desc: "Extensive monthly and annual recognition initiatives ensuring operational excellence shines bright.",
+    tag: "Heritage // 02",
+    title: "Exceptional Environments",
+    desc: "Architectural layouts planned intentionally down to the smallest detail to ensure slow, meaningful retail discovery.",
   },
   {
-    icon: ShieldAlert,
-    title: "Retail Excellence",
-    desc: "Award-winning layouts, operational precision parameters, and elite logistical supply frameworks.",
+    tag: "Culture // 03",
+    title: "Community Connection",
+    desc: "Spaces created not just to display collections, but to act as conversational anchors inside your city.",
   },
   {
-    icon: Heart,
-    title: "People-First Culture",
-    desc: "Robust employee lifecycle engagement configurations ensuring horizontal corporate growth trajectories.",
+    tag: "Standard // 04",
+    title: "Tailored Experience",
+    desc: "Attentive, non-intrusive service structures configured entirely to accommodate individual lifestyles.",
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12 },
+  },
+};
+
+const blockVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.95 },
+  },
+};
+
+const MotionLink = motion.create(Link);
+
 export default function WhySmartShopping() {
   return (
-    <section className="py-24 bg-[#F8FAFC] border-b border-[#E2E8F0]">
+    <section
+      id="curated-pillars"
+      className="py-24 sm:py-32 bg-[#FFFFFF] overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-[#F97316] font-sans font-semibold tracking-wider text-sm uppercase block mb-2">
-            OPERATIONAL PILLARS
+        {/* Symmetric Editorial Section Heading */}
+        <div className="max-w-4xl mb-20 lg:mb-28">
+          <span className="text-[#F97316] font-sans font-medium tracking-[0.2em] text-xs uppercase block mb-4">
+            Operational Pillars
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#0F172A] font-normal">
-            What Makes Smart Shopping Different
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#163B65] font-bold tracking-tight leading-[1.1]">
+            Redefining The Landscape <br />
+            Of Modern Curation.
           </h2>
         </div>
 
-        {/* Premium Editorial Staggered Layout Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          {PILLARS.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={idx}
-                className={`bg-white border border-[#E2E8F0] p-8 flex flex-col justify-between transition-all duration-300 hover:border-[#163B65]/30 ${
-                  idx % 2 === 1 ? "md:translate-y-6" : ""
-                }`}
-              >
-                <div>
-                  <div className="w-12 h-12 bg-[#F8FAFC] flex items-center justify-center border border-[#E2E8F0] text-[#F97316] mb-6">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="font-serif text-xl text-[#0F172A] font-medium mb-3">
-                    {item.title}
-                  </h3>
-                  <p className="font-sans text-slate-500 font-light text-sm leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-                <div className="w-8 h-[1px] bg-[#E2E8F0] mt-6 group-hover:w-16 transition-all" />
-              </div>
-            );
-          })}
-        </div>
+        {/* Minimal Editorial List Matrix (Replacing Boxy Grid) */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16 w-full border-t border-[#F5F2EC] pt-12"
+        >
+          {EDITORIAL_PILLARS.map((item, idx) => (
+            <motion.div
+              key={idx}
+              variants={blockVariants}
+              className="flex flex-col justify-between h-full group"
+            >
+              <div className="w-full whitespace-normal break-words">
+                {/* Structural Subtle Type Tag */}
+                <span className="font-sans text-[11px] font-bold tracking-widest text-[#F97316] uppercase block mb-4">
+                  {item.tag}
+                </span>
 
-        {/* Strategic CTA alignment */}
-        <div className="mt-16 text-center">
-          <Link
+                {/* Heading Structure */}
+                <h3 className="font-serif text-2xl text-[#163B65] font-bold mb-3 tracking-wide transition-colors duration-300 group-hover:text-[#F97316]">
+                  {item.title}
+                </h3>
+
+                {/* Body Text */}
+                <p className="font-sans text-[#475569] font-normal text-sm sm:text-base leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+
+              {/* Sophisticated Architectural Line Accent */}
+              <div className="w-full h-[1px] bg-[#F5F2EC] mt-8 transition-colors duration-500 group-hover:bg-[#163B65]/20" />
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Strategic Next-Gen Link Alignment */}
+        <div className="mt-20 lg:mt-28 text-left">
+          <MotionLink
             href="/about"
-            className="inline-flex items-center text-sm font-sans tracking-[0.2em] uppercase font-semibold text-[#163B65] hover:text-[#F97316] transition-colors group"
+            whileHover={{ x: 4 }}
+            className="inline-flex items-center gap-x-3 font-sans text-xs sm:text-sm font-bold tracking-widest uppercase text-[#163B65] group transition-all"
           >
-            Read Our Story
-            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </Link>
+            <span>Read Our Full Story</span>
+            <div className="w-9 h-9 rounded-full bg-[#F5F2EC] flex items-center justify-center text-[#163B65] group-hover:bg-[#163B65] group-hover:text-white transition-colors duration-300">
+              <ArrowRight className="w-4 h-4 shrink-0" />
+            </div>
+          </MotionLink>
         </div>
       </div>
     </section>

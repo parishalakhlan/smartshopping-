@@ -1,119 +1,132 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { ChevronDown } from "lucide-react";
 
 interface FoundersStoryProps {
   imageSrc?: string;
 }
 
 export function FoundersStory({
-  imageSrc = "image_agent_tag_10074991913707316770",
+  imageSrc = "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80",
 }: FoundersStoryProps) {
-  return (
-    <section className="py-24 lg:py-32 bg-background-main px-4 sm:px-8 lg:px-16 relative">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-        {/* Asymmetric Framed Imagery Asset */}
-        <div className="lg:col-span-5 relative">
-          {/* Subtle background framing shapes for depth */}
-          <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary/5 pointer-events-none" />
-          <div className="absolute -bottom-4 -right-4 w-40 h-40 bg-accent/5 pointer-events-none" />
+  const [isExpanded, setIsExpanded] = useState(false);
 
+  return (
+    <section
+      id="the-visionaries"
+      className="py-24 sm:py-32 bg-[#F5F2EC] overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+          {/* Section 4: Portrait Hover Depth Asset */}
+          <div className="lg:col-span-5 relative group">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.9, ease: [0.25, 1, 0.5, 1] }}
+              className="relative aspect-[4/5] w-full overflow-hidden bg-[#163B65]/5 border border-[#163B65]/10"
+            >
+              <Image
+                src={imageSrc}
+                alt="Vikram Singh and Vinod Kumar portrait"
+                fill
+                sizes="(max-w-7xl) 100vw, 40vw"
+                className="object-cover grayscale contrast-[1.02] brightness-[0.98] transition-transform duration-700 ease-out group-hover:scale-[1.03] group-hover:rotate-1"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#163B65]/40 to-transparent pointer-events-none" />
+            </motion.div>
+
+            {/* Minimalist Visual Accent Shadow Tag */}
+            <div className="absolute -bottom-4 -right-4 w-full h-full border border-[#F97316]/20 -z-10 pointer-events-none transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1" />
+          </div>
+
+          {/* Section 4: Personal Philosophy & Narrative Content */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.98, x: -25 }}
-            whileInView={{ opacity: 1, scale: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 overflow-hidden shadow-lg bg-background-secondary aspect-[4/5] border border-border-main"
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
+            className="lg:col-span-7 space-y-8 font-sans"
           >
-            <img
-              src={imageSrc}
-              alt="Vikram Singh and Vinod Kumar portrait"
-              className="w-full h-full object-cover grayscale brightness-95 contrast-105 transition-transform duration-700 hover:scale-105"
-              loading="lazy"
-            />
-            {/* Elegant Minimal Editorial Overlay Panel */}
-            <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-text-primary via-text-primary/40 to-transparent p-6 text-white pt-20">
-              <p className="text-[10px] uppercase font-luxury-meta tracking-widest text-accent">
-                FOUNDING PHOTOGRAPHY
+            <div className="space-y-3">
+              <span className="text-[#F97316] font-sans font-semibold tracking-[0.25em] text-xs uppercase block">
+                THE FOUNDING PHILOSOPHY
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#163B65] font-bold tracking-tight leading-[1.15]">
+                Driven By Belief, Not Infrastructure.
+              </h2>
+            </div>
+
+            {/* Core Story Sequence */}
+            <div className="text-[#475569] text-base sm:text-lg leading-relaxed space-y-4 font-normal">
+              <p>
+                When Vikram Singh and Vinod Kumar looked closely at the premium
+                lifestyle spaces across North India, they discovered a
+                recurring, artificial divide. World-class curation and immersive
+                lifestyle presentation fields remained anchored strictly within
+                major metropolitan boundaries.
               </p>
-              <p className="text-xs font-light tracking-wide text-white/80">
-                HQ Executive Gallery, 2026
+
+              <p className="italic font-serif text-xl sm:text-2xl text-[#163B65] font-semibold tracking-tight border-l-2 border-[#F97316] pl-4 py-1 my-6">
+                &ldquo;A neighborhood should never have to compromise its
+                regional identity or individual confidence because of geographic
+                logistics.&rdquo;
               </p>
+            </div>
+
+            {/* Interactive Section 4 Story Expansion Controls */}
+            <div className="border-t border-[#163B65]/10 pt-6">
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="inline-flex items-center gap-x-2 text-xs font-bold uppercase tracking-widest text-[#163B65] hover:text-[#F97316] transition-colors duration-300 focus:outline-none select-none cursor-pointer"
+              >
+                <span>
+                  {isExpanded ? "Collapse Background" : "Read Full Story"}
+                </span>
+                <motion.div
+                  animate={{ rotate: isExpanded ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <ChevronDown className="w-4 h-4" />
+                </motion.div>
+              </button>
+
+              <AnimatePresence initial={false}>
+                {isExpanded && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pt-4 text-sm sm:text-base text-[#475569]/90 space-y-4 leading-relaxed max-w-2xl">
+                      <p>
+                        Rejecting typical retail corporate timelines, they chose
+                        to invest alternative human resources directly into
+                        towns like Hisar and surrounding regions. They believed
+                        that local families deserved exactly the same aesthetic
+                        environments, premium collections, and uncompromised
+                        dignity traditionally found in major capital cities.
+                      </p>
+                      <p>
+                        Today, their collaborative leadership remains structured
+                        around this singular realization: Smart Shopping is not
+                        merely an ongoing expansion project, it is a localized
+                        cultural equalizer.
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </motion.div>
-
-          {/* Floating Metric Badge Component */}
-          <div className="absolute -right-4 top-8 bg-accent text-white px-5 py-3 shadow-md hidden sm:block z-20">
-            <div className="text-2xl font-serif font-bold leading-none mb-1">
-              17+
-            </div>
-            <div className="text-[9px] uppercase font-luxury-meta tracking-widest opacity-90 leading-none">
-              Years Co-Leadership
-            </div>
-          </div>
         </div>
-
-        {/* Narrative & High-Fashion Pull-Quote Block */}
-        <motion.div
-          initial={{ opacity: 0, x: 25 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-7 space-y-8"
-        >
-          <div className="space-y-3">
-            <span className="text-xs font-luxury-meta tracking-[0.2em] text-accent font-semibold block">
-              FIRST-GENERATION VISIONARIES
-            </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-luxury-heading tracking-tight text-text-primary leading-tight">
-              The Architecture of Scale
-            </h2>
-          </div>
-
-          <div className="space-y-4 text-text-secondary font-light leading-relaxed tracking-wide text-sm sm:text-base">
-            <p>
-              Alumni roots from Hisar, Haryana,{" "}
-              <strong className="text-text-primary font-medium">
-                Mr. Vikram Singh
-              </strong>{" "}
-              and{" "}
-              <strong className="text-text-primary font-medium">
-                Mr. Vinod Kumar
-              </strong>{" "}
-              launched their collaborative vision directly following graduation
-              in 2009 as determined retail disrupters.
-            </p>
-            <p>
-              Eschewing standard corporate career arcs, they engineered a
-              tactical expansion blueprint aimed straight at capturing Northern
-              India's high-velocity micro-metro corridors—transforming Smart
-              Shopping into an expansive regional fashion authority.
-            </p>
-          </div>
-
-          {/* Re-designed High Fashion Minimalist Pull-Quote */}
-          <div className="relative bg-background-secondary p-8 border-l-4 border-accent shadow-sm">
-            <Quote className="w-10 h-10 text-accent opacity-15 absolute top-4 right-4 stroke-[1]" />
-            <blockquote className="text-lg sm:text-xl italic font-serif leading-relaxed text-text-primary relative z-10 pr-6">
-              "At Smart Shopping, we believe that great fashion should be for
-              everyone, everywhere."
-            </blockquote>
-
-            <div className="mt-6 border-t border-border-main pt-4 flex items-center justify-between">
-              <div>
-                <span className="text-xs font-luxury-meta tracking-widest text-primary block font-bold">
-                  VIKRAM SINGH & VINOD KUMAR
-                </span>
-                <span className="text-[10px] uppercase tracking-wider text-text-muted">
-                  Executive Directorate Founders
-                </span>
-              </div>
-              <div className="w-12 h-[1px] bg-accent/60" />
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

@@ -1,25 +1,24 @@
 "use client";
 
 import React, { memo } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowUpRight01Icon } from "hugeicons-react";
-import { corporateConfig } from "@/config/navigation";
+import Link from "next/link";
+import { MapPin } from "lucide-react";
 
 export const NavbarActions = memo(function NavbarActions() {
   return (
-    <div className="hidden lg:flex items-center justify-end">
-      <Button
-        onClick={() => {
-          window.location.href = corporateConfig.ctaHref;
-        }}
-        className="h-11 bg-[#111111] hover:bg-[#E65100] text-white font-luxury-nav px-7 transition-all duration-300 rounded-none shadow-none cursor-pointer group flex items-center gap-2 border-0"
+    <div className="hidden sm:flex items-center justify-end select-none">
+      {/* 
+        BUTTON SYSTEM: Primary CTA
+        Background: #163B65 | Shape: Rounded Full | Text: White | Font: Inter 15px Medium
+        Padding: px-6 py-3 | Hover: Transitions to #214F84 with subtle lift 
+      */}
+      <Link
+        href="/store-locator"
+        className="inline-flex items-center gap-x-2 bg-[#163B65] text-white font-sans text-[15px] font-medium px-6 py-3 rounded-full hover:bg-[#214F84] transition-all duration-200 hover:-translate-y-[1px] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#163B65] focus-visible:ring-offset-2 shadow-sm cursor-pointer"
       >
-        <span>{corporateConfig.ctaLabel}</span>
-        <ArrowUpRight01Icon
-          size={15}
-          className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300 stroke-[1.8]"
-        />
-      </Button>
+        <MapPin className="w-4 h-4 stroke-[1.8]" aria-hidden="true" />
+        <span>Find Store</span>
+      </Link>
     </div>
   );
 });

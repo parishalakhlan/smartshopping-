@@ -3,7 +3,7 @@
 import React, { memo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { navigationConfig } from "@/config/navigation";
 
 export const NavbarLinks = memo(function NavbarLinks() {
@@ -12,7 +12,7 @@ export const NavbarLinks = memo(function NavbarLinks() {
 
   return (
     <nav
-      className="hidden lg:flex items-center gap-x-12 px-4"
+      className="hidden lg:flex items-center gap-x-8 px-2"
       aria-label="Main Navigation"
       onMouseLeave={() => setHoveredIndex(null)}
     >
@@ -26,47 +26,54 @@ export const NavbarLinks = memo(function NavbarLinks() {
             href={item.href}
             aria-current={isActive ? "page" : undefined}
             onMouseEnter={() => setHoveredIndex(index)}
-            className="font-luxury-nav relative py-3 focus-luxury block cursor-pointer select-none"
+            className="relative py-2 block cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#163B65] rounded-sm group"
           >
-            {/* Dynamic Progressive Intensity Text Layer */}
+            {/* Typography Scale: Inter, 15px, Medium, Letter Spacing 0.2px */}
             <motion.span
               animate={{
-                color: isActive || isHovered ? "#111111" : "#555555",
-                scale: isHovered ? 1.02 : 1,
+                color: isActive || isHovered ? "#163B65" : "#0F172A",
+                y: isHovered ? -1 : 0,
               }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="relative z-10 block"
+              transition={{ duration: 0.2, ease: [0.25, 1, 0.5, 1] }}
+              className="relative z-10 block font-sans text-[15px] font-medium tracking-[0.2px]"
             >
               {item.label}
             </motion.span>
 
-            {/* Active Anchor Dot Indicator */}
-            {isActive && (
-              <motion.span
-                layoutId="luxuryActiveDot"
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#E65100]"
-                transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              />
-            )}
-
-            {/* Sliding Premium Terracotta Slider Underline */}
-            <AnimatePresence>
-              {isHovered && (
-                <motion.span
-                  layoutId="luxuryNavIndicator"
-                  initial={{ opacity: 0, scaleX: 0.9 }}
-                  animate={{ opacity: 1, scaleX: 1 }}
-                  exit={{ opacity: 0, scaleX: 0.9 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 380,
-                    damping: 28,
-                    mass: 0.5,
-                  }}
-                  className="absolute bottom-[2px] left-0 right-0 h-[2px] bg-[#E65100] z-0 origin-center"
-                />
+            {/* Brand Motif Indicator: Connected Destination (●────) */}
+            <div
+              className="absolute bottom-[-6px] left-1/2 -translate-x-1/2 h-[4px] flex items-center justify-center pointer-events-none"
+              aria-hidden="true"
+            >
+              {/* Active Route Indicator */}
+              {isActive && (
+                <div className="flex items-center justify-center">
+                  <motion.span
+                    layoutId="smartNavDot"
+                    className="w-1.5 h-1.5 rounded-full bg-[#F97316] mr-[2px]"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                  <motion.span
+                    layoutId="smartNavLine"
+                    className="w-5 h-[1px] bg-[#F97316]"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                </div>
               )}
-            </AnimatePresence>
+
+              {/* Hover States Layer */}
+              {!isActive && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: isHovered ? 1 : 0 }}
+                  transition={{ duration: 0.2, ease: "easeInOut" }}
+                  className="flex items-center justify-center"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] mr-[2px]" />
+                  <span className="w-5 h-[1px] bg-[#F97316]" />
+                </motion.div>
+              )}
+            </div>
           </Link>
         );
       })}

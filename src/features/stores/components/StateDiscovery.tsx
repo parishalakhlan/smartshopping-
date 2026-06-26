@@ -1,54 +1,58 @@
 // src/features/stores/components/StateDiscovery.tsx
 import React from "react";
-import { ArrowUpRight, Building2, Map } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { REGIONAL_FOOTPRINTS } from "../data/stores";
 
 export function StateDiscovery() {
   return (
     <section
       id="state-expansion"
-      className="bg-slate-50 py-16 lg:py-24 px-4 sm:px-6 lg:px-8 border-t border-[var(--color-border-main)]"
+      className="bg-[#F5F2EC] py-24 sm:py-32 px-4 sm:px-6 lg:px-8 border-t border-[#163B65]/10 font-sans"
     >
-      <div className="max-w-[1400px] mx-auto space-y-12">
-        <div className="space-y-2">
-          <span className="text-xs font-bold text-[var(--color-accent)] uppercase tracking-widest block">
-            Corporate Roadmap
+      <div className="max-w-7xl mx-auto space-y-16">
+        {/* Editorial Section Header */}
+        <div className="max-w-3xl space-y-3 text-left">
+          <span className="text-[#F97316] font-semibold tracking-[0.25em] text-xs uppercase block">
+            TERRITORIAL PRESENCE // ATELIER NETWORK
           </span>
-          <h2 className="text-3xl font-serif font-bold tracking-tight text-[var(--color-text-primary)]">
-            Regional Franchise Coverage
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#163B65] font-bold tracking-tight">
+            Our Regional Footprints
           </h2>
-          <p className="text-sm text-[var(--color-text-secondary)] max-w-xl font-normal">
-            Strategic retail distribution footprint ensuring logistical support
-            and tier-1 scale multi-brand spaces across major economic trade
-            zones.
+          <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed max-w-xl">
+            A curated distribution matrix across major territories, establishing
+            fully integrated retail destinations and experiential physical
+            spaces.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        {/* 4-Column Balanced Editorial Layout Array */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {REGIONAL_FOOTPRINTS.map((footprint) => (
             <div
               key={footprint.id}
-              className="bg-white p-6 rounded-xl border border-[var(--color-border-main)] shadow-sm hover:shadow-md hover:border-slate-300 transition-all group flex flex-col justify-between"
+              className="bg-[#FFFFFF] p-6 rounded-none border border-[#163B65]/10 transition-all duration-400 group flex flex-col justify-between hover:shadow-lg hover:border-[#F97316]/30 relative overflow-hidden"
             >
-              <div className="space-y-4">
-                <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center text-[var(--color-primary)] group-hover:bg-orange-50 group-hover:text-[var(--color-accent)] transition-colors">
-                  <Building2 className="w-5 h-5" />
+              <div className="space-y-6 text-left">
+                {/* Meta Numeric Layer */}
+                <div className="text-[10px] font-bold tracking-widest text-[#F97316]">
+                  REGIONAL ZONE // 0{footprint.id || footprint.name.length}
                 </div>
 
-                <div>
-                  <h3 className="font-serif text-xl font-bold text-[var(--color-text-primary)]">
+                <div className="space-y-1.5">
+                  <h3 className="font-serif text-2xl font-bold text-[#163B65] tracking-tight group-hover:text-[#F97316] transition-colors duration-300">
                     {footprint.name}
                   </h3>
-                  <p className="text-xs text-slate-400 font-medium mt-0.5">
-                    {footprint.count} Active Operational Showrooms
+                  <p className="text-xs text-[#475569]/80 font-medium tracking-tight">
+                    {footprint.count} Active Flagship Showrooms
                   </p>
                 </div>
 
-                <div className="flex flex-wrap gap-1 pt-1">
+                {/* City Tags Micro Array */}
+                <div className="flex flex-wrap gap-1.5 pt-1">
                   {footprint.cities.slice(0, 3).map((city, idx) => (
                     <span
                       key={idx}
-                      className="bg-slate-50 text-slate-600 text-[10px] font-medium px-2 py-0.5 rounded border border-slate-100"
+                      className="bg-[#F5F2EC]/60 text-[#163B65] text-[10px] font-semibold px-2.5 py-1 rounded-none border border-[#163B65]/5 uppercase tracking-wider"
                     >
                       {city}
                     </span>
@@ -56,13 +60,17 @@ export function StateDiscovery() {
                 </div>
               </div>
 
+              {/* Explicit Clean Action Navigation Bridge */}
               <a
                 href="#locator-workspace"
-                className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[var(--color-primary)] group-hover:text-[var(--color-accent)] transition-colors"
+                className="mt-8 pt-4 border-t border-[#163B65]/5 flex items-center justify-between text-xs font-bold text-[#163B65] group-hover:text-[#F97316] transition-colors duration-300 uppercase tracking-wider"
               >
-                <span>View State Directory</span>
-                <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <span>Explore Directory</span>
+                <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
               </a>
+
+              {/* Subtle Interactive Edge Accent */}
+              <div className="absolute top-0 left-0 h-[2px] bg-[#F97316] w-0 group-hover:w-full transition-all duration-500 ease-out" />
             </div>
           ))}
         </div>

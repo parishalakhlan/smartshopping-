@@ -2,24 +2,15 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { NORTH_INDIA_STORES, REGIONAL_FOOTPRINTS, Store } from "../data/stores";
-import {
-  MapPin,
-  Phone,
-  Compass,
-  ArrowRight,
-  Clock,
-  Map as MapIcon,
-  Plus,
-  Minus,
-  Layers,
-} from "lucide-react";
+import Image from "next/image";
+import { NORTH_INDIA_STORES, REGIONAL_FOOTPRINTS } from "../data/stores";
+import { Phone, Compass, Clock, Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function InteractiveStoreLocator() {
   const [selectedState, setSelectedState] = useState<string>("All Cities");
   const [activeStoreId, setActiveStoreId] = useState<string>(
-    NORTH_INDIA_STORES[0].id,
+    NORTH_INDIA_STORES[0]?.id || "",
   );
   const [zoomLevel, setZoomLevel] = useState<number>(1);
 
@@ -30,93 +21,89 @@ export function InteractiveStoreLocator() {
     );
   }, [selectedState]);
 
-  const activeStore = useMemo(() => {
-    return (
-      NORTH_INDIA_STORES.find((s) => s.id === activeStoreId) ||
-      filteredStores[0] ||
-      NORTH_INDIA_STORES[0]
-    );
-  }, [activeStoreId, filteredStores]);
-
   const getChoroplethFill = (count: number, isSelected: boolean) => {
     if (isSelected)
-      return "fill-[var(--color-accent)] stroke-[var(--color-primary)] stroke-2 drop-shadow-md";
+      return "fill-[#F97316] stroke-[#163B65] stroke-[1.5px] drop-shadow-sm";
     if (count >= 12)
-      return "fill-amber-600/90 hover:fill-amber-700 stroke-slate-300 stroke-[1px]";
+      return "fill-[#163B65]/20 hover:fill-[#163B65]/30 stroke-[#163B65]/10 stroke-[1px]";
     if (count >= 8)
-      return "fill-amber-500/85 hover:fill-amber-600 stroke-slate-300 stroke-[1px]";
+      return "fill-[#163B65]/15 hover:fill-[#163B65]/25 stroke-[#163B65]/10 stroke-[1px]";
     if (count >= 5)
-      return "fill-amber-400/80 hover:fill-amber-500 stroke-slate-300 stroke-[1px]";
-    return "fill-amber-100/90 hover:fill-amber-200 stroke-slate-300 stroke-[1px]";
+      return "fill-[#163B65]/10 hover:fill-[#163B65]/20 stroke-[#163B65]/10 stroke-[1px]";
+    return "fill-[#163B65]/5 hover:fill-[#163B65]/15 stroke-[#163B65]/10 stroke-[1px]";
   };
 
   return (
     <section
       id="locator-workspace"
-      className="w-full bg-white py-12 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto scroll-mt-6"
+      className="w-full bg-[#FFFFFF] py-16 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-6 font-sans"
     >
-      <div className="flex flex-col lg:flex-row gap-8 items-stretch min-h-[720px]">
-        {/* MAP PANEL (60%): Dominant Retail Network Interface View */}
-        <div className="w-full lg:w-[60%] flex flex-col justify-between relative bg-slate-50 rounded-xl overflow-hidden border border-[var(--color-border-main)] p-4 sm:p-6 shadow-sm">
-          {/* Map Controls Header */}
-          <div className="flex items-center justify-between z-20 w-full bg-white/95 backdrop-blur-sm p-4 rounded-lg border border-slate-200/80 shadow-sm">
-            <div>
-              <span className="text-[10px] uppercase tracking-widest font-bold text-[var(--color-text-secondary)]">
-                Live Coverage Map
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch min-h-[720px]">
+        {/* MAP PANEL (60%): Premium Spatial Interactive Base Canvas */}
+        <div className="w-full lg:w-[60%] flex flex-col justify-between relative bg-[#F5F2EC] overflow-hidden border border-[#163B65]/10 p-6 shadow-sm">
+          {/* Map Curation Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 z-20 w-full bg-[#FFFFFF]/95 backdrop-blur-md p-5 border border-[#163B65]/5 shadow-sm">
+            <div className="text-left">
+              <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#F97316] block mb-0.5">
+                GEO-SPATIAL COVERAGE
               </span>
-              <h3 className="font-serif text-xl text-[var(--color-text-primary)] font-bold">
-                Select Region
+              <h3 className="font-serif text-xl text-[#163B65] font-bold tracking-tight">
+                Select Operating Region
               </h3>
             </div>
             <button
               onClick={() => setSelectedState("All Cities")}
-              className={`px-4 py-2 text-xs font-semibold rounded-md transition-all border ${
+              className={`px-4 py-2 text-xs font-semibold transition-all duration-300 border rounded-none uppercase tracking-wider ${
                 selectedState === "All Cities"
-                  ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                  : "bg-white text-[var(--color-text-primary)] border-slate-200 hover:border-slate-400"
+                  ? "bg-[#163B65] text-[#FFFFFF] border-[#163B65]"
+                  : "bg-[#FFFFFF] text-[#163B65] border-[#163B65]/10 hover:border-[#163B65]"
               }`}
             >
-              Show All Network (30)
+              Show All Showrooms ({NORTH_INDIA_STORES.length})
             </button>
           </div>
 
-          {/* High-Fidelity Geographic Vector Base Layer Map */}
-          <div className="relative flex-1 w-full min-h-[480px] flex items-center justify-center p-4">
-            {/* Real Satellite Hybrid Grid Pattern Underlay */}
-            <div className="absolute inset-0 opacity-[0.04] bg-[radial-gradient(#0f172a_1px,transparent_1px)] [background-size:20px_20px]" />
-            <div className="absolute inset-0 opacity-[0.02] bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px)] [background-size:100px_100px]" />
+          {/* Interactive Core SVG Canvas Space */}
+          <div className="relative flex-1 w-full min-h-[500px] flex items-center justify-center p-4">
+            <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#163B65_1px,transparent_1px)] [background-size:20px_20px]" />
+            <div className="absolute inset-0 opacity-[0.015] bg-[linear-gradient(to_right,#163B65_1px,transparent_1px)] [background-size:100px_100px]" />
 
-            {/* Simulated Real Map Background Layer via Low Opacity Photo Projections */}
-            <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
-              <img
+            {/* Premium Topology Abstract Underlay */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.04] grayscale filter contrast-125">
+              <Image
                 src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1000&q=80"
                 alt="Topology Grid Reference Plate"
-                className="w-full h-full object-cover object-center scale-110"
+                fill
+                sizes="(max-w-7xl) 60vw, 100vw"
+                className="object-cover object-center scale-105"
+                priority
               />
             </div>
 
-            {/* Standard Map UX Controls (Zoom Bar Layer) */}
-            <div className="absolute bottom-6 left-6 z-20 flex flex-col gap-1 bg-white border border-slate-200 p-1 rounded-md shadow-sm">
+            {/* Standard Luxury Linear Elevation Zoom Controls */}
+            <div className="absolute bottom-6 left-6 z-20 flex flex-col bg-[#FFFFFF] border border-[#163B65]/10 p-1 shadow-md rounded-none">
               <button
                 onClick={() => setZoomLevel((p) => Math.min(p + 0.2, 1.6))}
-                className="p-2 hover:bg-slate-100 rounded text-slate-700 transition-colors"
+                className="p-2 hover:bg-[#F5F2EC] text-[#163B65] transition-colors duration-200"
+                aria-label="Zoom In"
               >
                 <Plus className="w-4 h-4" />
               </button>
-              <div className="h-[1px] bg-slate-200 mx-1" />
+              <div className="h-[1px] bg-[#163B65]/10 mx-1" />
               <button
                 onClick={() => setZoomLevel((p) => Math.max(p - 0.2, 0.8))}
-                className="p-2 hover:bg-slate-100 rounded text-slate-700 transition-colors"
+                className="p-2 hover:bg-[#F5F2EC] text-[#163B65] transition-colors duration-200"
+                aria-label="Zoom Out"
               >
                 <Minus className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Interactive Vector Space View Wrapper Container */}
+            {/* Dynamic Vector Space View Wrapper Container */}
             <motion.div
               animate={{ scale: zoomLevel }}
-              transition={{ type: "spring", stiffness: 200, damping: 25 }}
-              className="w-full max-w-[500px] h-auto relative"
+              transition={{ type: "spring", stiffness: 220, damping: 26 }}
+              className="w-full max-w-[460px] h-auto relative"
             >
               <svg
                 viewBox="0 0 100 100"
@@ -131,7 +118,7 @@ export function InteractiveStoreLocator() {
                       <path
                         key={footprint.id}
                         d={footprint.svgPath}
-                        className={`cursor-pointer transition-all duration-300 ease-in-out ${getChoroplethFill(footprint.count, isSelected)}`}
+                        className={`cursor-pointer transition-all duration-400 ease-out ${getChoroplethFill(footprint.count, isSelected)}`}
                         onClick={() => {
                           setSelectedState(footprint.name);
                           const matchingStore = NORTH_INDIA_STORES.find(
@@ -147,7 +134,7 @@ export function InteractiveStoreLocator() {
                 </g>
               </svg>
 
-              {/* Exact Coordinate Placement Overlay Badges */}
+              {/* Precise Absolute Grid Coordinated Overlay Badges */}
               {REGIONAL_FOOTPRINTS.map((footprint) => {
                 const isSelected =
                   selectedState.toLowerCase() === footprint.name.toLowerCase();
@@ -170,22 +157,20 @@ export function InteractiveStoreLocator() {
                         );
                         if (matchingStore) setActiveStoreId(matchingStore.id);
                       }}
-                      className={`flex flex-col items-center group focus:outline-none`}
+                      className="flex flex-col items-center group focus:outline-none"
                     >
                       <div
-                        className={`w-7 h-7 rounded-full flex items-center justify-center font-sans text-xs font-bold transition-all shadow-sm ${
+                        className={`w-7 h-7 rounded-full flex items-center justify-center font-semibold text-xs transition-all duration-300 shadow-md ${
                           isSelected
-                            ? "bg-[var(--color-primary)] text-white ring-4 ring-orange-200 scale-110"
-                            : "bg-slate-900 text-white group-hover:bg-[var(--color-accent)]"
+                            ? "bg-[#F97316] text-[#FFFFFF] ring-4 ring-[#F97316]/20 scale-110"
+                            : "bg-[#163B65] text-[#FFFFFF] group-hover:bg-[#F97316]"
                         }`}
                       >
                         {footprint.count}
                       </div>
                       <span
-                        className={`text-[9px] font-bold uppercase tracking-wider mt-1 bg-white/90 px-1 rounded shadow-sm border border-slate-100 ${
-                          isSelected
-                            ? "text-[var(--color-primary)]"
-                            : "text-slate-700"
+                        className={`text-[9px] font-bold uppercase tracking-wider mt-1.5 bg-[#FFFFFF]/95 px-1.5 py-0.5 shadow-sm border border-[#163B65]/5 ${
+                          isSelected ? "text-[#F97316]" : "text-[#163B65]"
                         }`}
                       >
                         {footprint.name}
@@ -197,18 +182,18 @@ export function InteractiveStoreLocator() {
             </motion.div>
           </div>
 
-          {/* Legal Meta Credits bar */}
-          <div className="w-full text-right pt-2 border-t border-slate-200/40 text-[9px] text-slate-400 font-sans tracking-wide">
-            Interactive Node Engine © Enterprise Retail Group Mapping Inc.
+          {/* Infrastructure Verification Metadata Bar */}
+          <div className="w-full text-right pt-3 border-t border-[#163B65]/10 text-[9px] text-[#475569]/60 font-medium uppercase tracking-widest">
+            Spatial Network Registry Architecture Framework // 2026
           </div>
         </div>
 
-        {/* LIST PANEL (40%): High Performance Filterable Store Cards List */}
-        <div className="w-full lg:w-[40%] flex flex-col space-y-4">
-          {/* Top Pill State Selectors */}
-          <div className="space-y-1.5">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-[var(--color-text-secondary)]">
-              Quick State Filters
+        {/* LIST PANEL (40%): Balanced Magazine Card Interface Column */}
+        <div className="w-full lg:w-[40%] flex flex-col space-y-6">
+          {/* Quick Pill Filter System */}
+          <div className="space-y-2 text-left">
+            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#F97316] block">
+              Quick State Catalogs
             </span>
             <div className="flex flex-wrap gap-1.5">
               {["All Cities", ...REGIONAL_FOOTPRINTS.map((r) => r.name)].map(
@@ -226,10 +211,10 @@ export function InteractiveStoreLocator() {
                         );
                         if (matchingStore) setActiveStoreId(matchingStore.id);
                       }}
-                      className={`px-3 py-1.5 text-xs font-semibold rounded transition-all border ${
+                      className={`px-3 py-1.5 text-xs font-semibold transition-all duration-300 border rounded-none uppercase tracking-wider ${
                         isCurrent
-                          ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-sm"
-                          : "bg-white text-[var(--color-text-primary)] border-slate-200 hover:border-slate-400"
+                          ? "bg-[#163B65] text-[#FFFFFF] border-[#163B65] shadow-sm"
+                          : "bg-[#FFFFFF] text-[#163B65] border-[#163B65]/10 hover:border-[#163B65]"
                       }`}
                     >
                       {stateName}
@@ -240,8 +225,8 @@ export function InteractiveStoreLocator() {
             </div>
           </div>
 
-          {/* Scrollable Cards Listing */}
-          <div className="flex-1 overflow-y-auto space-y-4 max-h-[600px] pr-1 scrollbar-thin">
+          {/* High-Performance Smooth Dynamic Cards Scroller */}
+          <div className="flex-1 overflow-y-auto space-y-4 max-h-[600px] pr-2 scrollbar-thin border-t border-[#163B65]/5 pt-2">
             <AnimatePresence mode="popLayout">
               {filteredStores.map((store) => {
                 const isCurrent = activeStoreId === store.id;
@@ -249,68 +234,75 @@ export function InteractiveStoreLocator() {
                   <motion.div
                     key={store.id}
                     layout
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.98 }}
                     onClick={() => setActiveStoreId(store.id)}
-                    className={`bg-white rounded-lg border p-5 transition-all duration-300 cursor-pointer relative group overflow-hidden ${
+                    className={`bg-[#FFFFFF] rounded-none border p-5 transition-all duration-400 cursor-pointer relative group overflow-hidden ${
                       isCurrent
-                        ? "border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] shadow-md"
-                        : "border-[var(--color-border-main)] hover:border-slate-400 hover:shadow-sm"
+                        ? "border-[#163B65] shadow-md bg-[#F5F2EC]/20"
+                        : "border-[#163B65]/10 hover:border-[#F97316]/40 hover:shadow-sm"
                     }`}
                   >
-                    {/* Top Orange Decorative Bar Accent */}
+                    {/* Interaction Top Accent Track Overlay */}
                     <div
-                      className={`absolute top-0 left-0 right-0 h-[3px] bg-[var(--color-accent)] transition-transform duration-300 scale-x-0 ${isCurrent ? "scale-x-100" : "group-hover:scale-x-50"}`}
+                      className={`absolute top-0 left-0 right-0 h-[2px] bg-[#F97316] transition-transform duration-400 scale-x-0 origin-left ${
+                        isCurrent ? "scale-x-100" : "group-hover:scale-x-50"
+                      }`}
                     />
 
-                    {/* Brand Banner Strip */}
-                    <div className="flex justify-between items-start gap-4 pb-3 border-b border-slate-100">
-                      <div className="text-[11px] font-bold text-slate-500 tracking-wide font-sans">
-                        {store.brands.join(" • ")}
+                    {/* Showroom Brand Sub-Header Ribbon */}
+                    <div className="flex justify-between items-center gap-4 pb-3 border-b border-[#163B65]/5">
+                      <div className="text-[10px] font-bold text-[#475569]/70 tracking-widest uppercase">
+                        {store.brands.join("  //  ")}
                       </div>
-                      <span className="bg-emerald-50 text-[var(--color-success)] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border border-emerald-200 flex items-center gap-1 shrink-0">
-                        <Clock className="w-2.5 h-2.5" /> Open
+                      <span className="bg-[#FFFFFF] text-[#10B981] text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 border border-[#10B981]/20 flex items-center gap-1 shrink-0">
+                        <Clock className="w-2.5 h-2.5 text-[#10B981]" /> Open
                       </span>
                     </div>
 
-                    {/* Showroom Details Grid Info */}
-                    <div className="mt-3 grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
-                      <div className="sm:col-span-8 space-y-1">
-                        <h4 className="font-serif text-lg font-bold text-[var(--color-text-primary)] tracking-wide group-hover:text-[var(--color-primary)] transition-colors">
+                    {/* Core Grid Showroom Identity Parameters */}
+                    <div className="mt-4 grid grid-cols-1 sm:grid-cols-12 gap-4 items-center text-left">
+                      <div className="sm:col-span-8 space-y-1.5">
+                        <h4 className="font-serif text-lg font-bold text-[#163B65] tracking-tight group-hover:text-[#F97316] transition-colors duration-300">
                           {store.name}
                         </h4>
-                        <p className="text-xs text-[var(--color-text-secondary)] font-normal leading-relaxed">
+                        <p className="text-xs text-[#475569] font-normal leading-relaxed">
                           {store.address}, {store.city}, {store.state}
                         </p>
                       </div>
 
-                      {/* Embedded Micro Map Photo Component */}
-                      <div className="sm:col-span-4 h-14 rounded overflow-hidden relative border border-slate-200 bg-slate-100 hidden sm:block">
-                        <img
+                      {/* Micro Embedded Photographic Location Framing Block */}
+                      <div className="sm:col-span-4 h-16 rounded-none overflow-hidden relative border border-[#163B65]/10 bg-[#F5F2EC] hidden sm:block">
+                        <Image
                           src={store.image}
-                          alt="Showroom micro location snapshot"
-                          className="w-full h-full object-cover filter brightness-95 group-hover:scale-105 transition-transform duration-500"
+                          alt={`${store.name} location context plate`}
+                          fill
+                          sizes="(max-w-7xl) 10vw, 15vw"
+                          className="object-cover grayscale contrast-[1.02] group-hover:scale-105 group-hover:grayscale-0 transition-all duration-500 ease-out"
                         />
                       </div>
                     </div>
 
-                    {/* Action Panel Triggers */}
-                    <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between flex-wrap gap-2">
+                    {/* Structural Execution Action Footer Triggers */}
+                    <div className="mt-5 pt-3 border-t border-[#163B65]/5 flex items-center justify-between flex-wrap gap-3">
                       <a
                         href={`tel:${store.phone.replace(/\s+/g, "")}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="text-xs font-semibold text-slate-600 hover:text-[var(--color-primary)] transition-colors inline-flex items-center gap-1.5"
+                        className="text-xs font-bold text-[#475569] hover:text-[#F97316] transition-colors uppercase tracking-wider inline-flex items-center gap-1.5"
                       >
-                        <Phone className="w-3.5 h-3.5" /> Call Store
+                        <Phone className="w-3.5 h-3.5 text-[#163B65]" /> Call
+                        Store
                       </a>
 
                       <a
-                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(store.name + " " + store.address)}`}
+                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                          store.name + " " + store.address,
+                        )}`}
                         target="_blank"
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="text-xs font-bold text-white bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] px-3 py-1.5 rounded transition-all inline-flex items-center gap-1 shadow-sm"
+                        className="text-xs font-bold text-[#FFFFFF] bg-[#163B65] hover:bg-[#F97316] px-3 py-2 rounded-none transition-all duration-300 inline-flex items-center gap-1.5 uppercase tracking-wider shadow-sm"
                       >
                         Directions <Compass className="w-3.5 h-3.5" />
                       </a>

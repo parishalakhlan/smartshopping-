@@ -6,7 +6,6 @@ import WhySmartShopping from "@/features/home/components/WhySmartShopping";
 import StoreNetwork from "@/features/home/components/StoreNetwork";
 import FashionExperience from "@/features/home/components/FashionExperience";
 import TrustSection from "@/features/home/components/TrustSection";
-import HomeCTA from "@/features/home/components/HomeCTA";
 
 export const metadata = {
   title:
@@ -26,7 +25,6 @@ export default function HomePage() {
       <StoreNetwork />
       <FashionExperience />
       <TrustSection />
-      <HomeCTA />
     </main>
   );
 }
