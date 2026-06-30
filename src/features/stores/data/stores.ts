@@ -11,6 +11,20 @@ export interface Store {
   phone: string;
   coordinates: { lat: number; lng: number };
   image: string;
+  googleMapsUrl: string;
+  hours: string;
+}
+
+export interface CityData {
+  name: string;
+  storeCount: number;
+  stores: Store[];
+}
+
+export interface StateRegion {
+  id: string;
+  name: string;
+  cities: CityData[];
 }
 
 export interface StateFootprint {
@@ -22,6 +36,54 @@ export interface StateFootprint {
   labelY: number;
   cities: string[];
 }
+
+export const REGIONAL_FOOTPRINTS: StateFootprint[] = [
+  {
+    id: "punjab",
+    name: "Punjab",
+    count: 4,
+    labelX: 35,
+    labelY: 30,
+    svgPath: "M20,20 L50,20 L45,45 L15,40 Z",
+    cities: ["Ludhiana", "Amritsar", "Jalandhar", "Patiala"],
+  },
+  {
+    id: "haryana",
+    name: "Haryana",
+    count: 3,
+    labelX: 45,
+    labelY: 55,
+    svgPath: "M45,45 L70,35 L65,70 L35,65 Z",
+    cities: ["Hisar", "Gurugram", "Faridabad"],
+  },
+  {
+    id: "delhi",
+    name: "Delhi NCR",
+    count: 2,
+    labelX: 62,
+    labelY: 48,
+    svgPath: "M60,45 L68,43 L66,52 L58,50 Z",
+    cities: ["New Delhi", "Connaught Place"],
+  },
+  {
+    id: "rajasthan",
+    name: "Rajasthan",
+    count: 1,
+    labelX: 22,
+    labelY: 70,
+    svgPath: "M15,40 L35,65 L25,95 L5,75 Z",
+    cities: ["Jaipur"],
+  },
+  {
+    id: "uttar-pradesh",
+    name: "Uttar Pradesh",
+    count: 2,
+    labelX: 78,
+    labelY: 65,
+    svgPath: "M65,70 L95,55 L90,90 L60,85 Z",
+    cities: ["Lucknow", "Kanpur"],
+  },
+];
 
 export const NORTH_INDIA_STORES: Store[] = [
   {
@@ -42,7 +104,11 @@ export const NORTH_INDIA_STORES: Store[] = [
     coordinates: { lat: 29.1492, lng: 75.7217 },
     image:
       "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=600&q=80",
+    googleMapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=52+N+Gurudwara+Road+Model+Town+Hisar+Haryana",
+    hours: "10:00 AM - 9:00 PM",
   },
+
   {
     id: "str-gurugram",
     name: "The Flagship Atelier - Elante Galleria",
@@ -55,6 +121,9 @@ export const NORTH_INDIA_STORES: Store[] = [
     coordinates: { lat: 28.5042, lng: 77.0989 },
     image:
       "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80",
+    googleMapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=Ambience+Island+NH-8+DLF+Phase+3+Gurugram+Haryana",
+    hours: "10:00 AM - 9:00 PM",
   },
   {
     id: "str-chandigarh",
@@ -66,8 +135,11 @@ export const NORTH_INDIA_STORES: Store[] = [
     state: "Chandigarh",
     phone: "+91 172 4659000",
     coordinates: { lat: 30.7061, lng: 76.8013 },
+    hours: "10:00 AM - 9:00 PM",
     image:
       "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=600&q=80",
+    googleMapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=Elante+Mall+Phase+1+Chandigarh",
   },
   {
     id: "str-ludhiana",
@@ -79,8 +151,11 @@ export const NORTH_INDIA_STORES: Store[] = [
     state: "Punjab",
     phone: "+91 161 5021122",
     coordinates: { lat: 30.901, lng: 75.8573 },
+    hours: "10:00 AM - 9:00 PM",
     image:
       "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=600&q=80",
+    googleMapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=Ferozepur+Road+Near+Kipps+Market+Ludhiana+Punjab",
   },
   {
     id: "str-jaipur",
@@ -92,8 +167,11 @@ export const NORTH_INDIA_STORES: Store[] = [
     state: "Rajasthan",
     phone: "+91 141 2720021",
     coordinates: { lat: 26.8549, lng: 75.8058 },
+    hours: "10:00 AM - 9:00 PM",
     image:
       "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?auto=format&fit=crop&w=600&q=80",
+    googleMapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=Malviya+Nagar+Near+Gaurav+Tower+Jaipur+Rajasthan",
   },
   {
     id: "str-delhi",
@@ -111,58 +189,52 @@ export const NORTH_INDIA_STORES: Store[] = [
     state: "Delhi",
     phone: "+91 11 43513344",
     coordinates: { lat: 28.6304, lng: 77.2177 },
+    hours: "10:00 AM - 9:00 PM",
     image:
       "https://images.unsplash.com/photo-1533929736458-ca588d08c8be?auto=format&fit=crop&w=600&q=80",
+    googleMapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=Radial+Road+3+E-Block+Connaught+Place+New+Delhi",
   },
 ];
 
-export const REGIONAL_FOOTPRINTS: StateFootprint[] = [
-  {
-    id: "haccess-haryana",
-    name: "Haryana",
-    count: 12,
-    svgPath:
-      "M 42 35 C 46 32, 50 36, 54 33 C 58 35, 60 42, 63 46 C 58 52, 54 58, 48 64 C 42 60, 40 52, 38 48 Z",
-    labelX: 49,
-    labelY: 45,
-    cities: ["Hisar", "Gurugram", "Panipat", "Ambala"],
-  },
-  {
-    id: "haccess-punjab",
-    name: "Punjab",
-    count: 8,
-    svgPath:
-      "M 25 22 C 32 18, 42 16, 46 20 C 48 26, 44 32, 42 35 C 36 38, 30 34, 25 22 Z",
-    labelX: 36,
-    labelY: 26,
-    cities: ["Ludhiana", "Amritsar", "Jalandhar", "Patiala"],
-  },
-  {
-    id: "haccess-rajasthan",
-    name: "Rajasthan",
-    count: 5,
-    svgPath:
-      "M 12 55 C 22 50, 32 45, 38 48 C 40 56, 44 64, 46 72 C 34 84, 24 88, 15 78 C 10 70, 8 62, 12 55 Z",
-    labelX: 28,
-    labelY: 66,
-    cities: ["Jaipur", "Jodhpur", "Udaipur", "Kota"],
-  },
-  {
-    id: "haccess-delhi",
-    name: "Delhi",
-    count: 4,
-    svgPath: "M 53 47 C 55 46, 57 46, 58 48 C 58 50, 56 52, 54 51 Z",
-    labelX: 57,
-    labelY: 51,
-    cities: ["New Delhi", "South Delhi"],
-  },
-  {
-    id: "haccess-chandigarh",
-    name: "Chandigarh",
-    count: 2,
-    svgPath: "M 46 14 C 49 13, 51 13, 52 15 C 51 17, 48 17, 46 16 Z",
-    labelX: 52,
-    labelY: 12,
-    cities: ["Chandigarh Hub"],
-  },
-];
+// Helper functions
+export const getStoresByState = (stateName: string): Store[] => {
+  return NORTH_INDIA_STORES.filter((store) => store.state === stateName);
+};
+
+export const getStoresByCity = (cityName: string): Store[] => {
+  return NORTH_INDIA_STORES.filter((store) => store.city === cityName);
+};
+
+export const getHierarchicalNetwork = (): StateRegion[] => {
+  const stateMap = new Map<string, StateRegion>();
+
+  NORTH_INDIA_STORES.forEach((store: Store) => {
+    if (!stateMap.has(store.state)) {
+      stateMap.set(store.state, {
+        id: store.state.toLowerCase().replace(/\s+/g, "-"),
+        name: store.state,
+        cities: [],
+      });
+    }
+
+    const stateRegion = stateMap.get(store.state)!;
+    let cityEntry = stateRegion.cities.find(
+      (c: CityData) => c.name === store.city,
+    );
+
+    if (!cityEntry) {
+      cityEntry = {
+        name: store.city,
+        storeCount: 0,
+        stores: [],
+      };
+      stateRegion.cities.push(cityEntry);
+    }
+
+    cityEntry.stores.push(store);
+    cityEntry.storeCount++;
+  });
+
+  return Array.from(stateMap.values());
+};

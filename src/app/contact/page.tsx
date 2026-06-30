@@ -1,22 +1,40 @@
-import { Metadata } from "next";
-import ContactContent from "@/features/contact/contact-content";
+// pages/contact.tsx or app/contact/page.tsx
 
-export const metadata: Metadata = {
-  title: "Corporate HQ & Partnership Inbound | Smart Shopping Group",
-  description:
-    "Connect with North India's leading multi-brand fashion franchise management division. Dedicated desks for brand collaborations, institutional leasing, logistics, and client escalation management.",
-  openGraph: {
-    title: "Smart Shopping Group | Premium Fashion Retail Correspondence",
-    description:
-      "Direct institutional pathways to our Chandigarh headquarters and regional franchise leadership offices across 27+ locations.",
-    type: "website",
-  },
-};
+"use client";
+
+import React, { useRef } from "react";
+import { HeroSection } from "@/features/contact/HeroSection";
+import { PathSelectionSection } from "@/features/contact/PathSelectionSection";
+import { QuickConnectSection } from "@/features/contact/QuickConnectSection";
+import { VisitSection } from "@/features/contact/VisitSection";
+import { PartnershipSection } from "@/features/contact/PartnershipSection";
+import { ContactFormSection } from "@/features/contact/ContactFormSection";
+import { FAQSection } from "@/features/contact/FAQSection";
+import { FinalCTASection } from "@/features/contact/FinalCTASection";
 
 export default function ContactPage() {
+  const formRef = useRef<HTMLDivElement>(null);
+
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToForm = () => {
+    const el = document.getElementById("form");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <main className="min-h-screen bg-white">
-      <ContactContent />
-    </main>
+    <div className="bg-[#FFFFFF] text-[#163B65] font-sans antialiased selection:bg-[#F97316]/10 selection:text-[#F97316] overflow-x-hidden">
+      <HeroSection scrollToSection={scrollToSection} />
+      <PathSelectionSection />
+      <QuickConnectSection />
+      <VisitSection />
+      <PartnershipSection onStartPartnership={scrollToForm} />
+      <ContactFormSection />
+      <FAQSection />
+      <FinalCTASection scrollToSection={scrollToSection} />
+    </div>
   );
 }

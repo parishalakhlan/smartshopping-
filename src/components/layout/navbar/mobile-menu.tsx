@@ -1,323 +1,372 @@
 "use client";
 
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Menu,
-  X,
-  ArrowUpRight,
-  MapPin,
-  Sparkles,
-  Building,
-  Briefcase,
-} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { NavbarLogo } from "./navbar-logo";
+import { ChevronDown, ArrowRight } from "lucide-react";
 
-// --- Configuration Data ---
-const primaryNavItems = [
-  {
-    label: "About Us",
-    sub: "Our journey since 2009",
-    href: "/about",
-  },
-  {
-    label: "Premium Brands",
-    sub: "International fashion collections",
-    href: "/brands",
-  },
-  {
-    label: "Find Stores",
-    sub: "27+ locations across North India",
-    href: "/store-locator",
-  },
-  {
-    label: "Our People",
-    sub: "Meet the people behind Smart Shopping",
-    href: "/team",
-  },
-  {
-    label: "Build Your Career",
-    sub: "Grow with a young retail team",
-    href: "/careers",
-  },
-  {
-    label: "Get In Touch",
-    sub: "Multiple ways to connect",
-    href: "/contact",
-  },
-];
+// --- Design System V3 Exact Physics Calibrations ---
+// Fixed: Using proper Framer Motion transition types
+const PANEL_SPRING = {
+  type: "spring" as const,
+  stiffness: 140,
+  damping: 22,
+  mass: 1,
+};
+const TOGGLE_SPRING = {
+  type: "spring" as const,
+  stiffness: 180,
+  damping: 18,
+};
+const TEXT_SPRING = {
+  type: "spring" as const,
+  stiffness: 190,
+  damping: 24,
+};
 
-const featuredBrands = [
-  "Jack & Jones",
-  "Vero Moda",
-  "Only",
-  "Selected",
-  "JJ Junior",
-  "Celio",
-  "The Souled Store",
-];
-
-const networkMetrics = [
-  { label: "Stores", value: "27+" },
-  { label: "States", value: "7" },
-  { label: "Years", value: "15+" },
-];
-
-// --- Animation Variants ---
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.05, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.05, delayChildren: 0.12 },
   },
 };
-const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
+
+// Fixed: Properly typed transition
+const linkVariants = {
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.3 },
+    transition: { type: "spring" as const, stiffness: 180, damping: 22 },
+  },
+};
+
+// Fixed: Properly typed transitions with correct easing
+const submenuVariants = {
+  hidden: { opacity: 0, height: 0 },
+  visible: {
+    opacity: 1,
+    height: "auto",
+    transition: {
+      height: { duration: 0.35, ease: [0.25, 1, 0.5, 1] as const },
+      opacity: { duration: 0.25 },
+    },
+  },
+  exit: {
+    opacity: 0,
+    height: 0,
+    transition: {
+      height: { duration: 0.3, ease: [0.25, 1, 0.5, 1] as const },
+      opacity: { duration: 0.15 },
+    },
   },
 };
 
 export const MobileMenu = memo(function MobileMenu() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isAboutExpanded, setIsAboutExpanded] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return (
-      <div className="lg:hidden flex items-center">
-        <button
-          aria-label="Close menu"
-          type="button"
-          className="text-[#0F172A] opacity-50 p-2"
-          disabled
-        >
-          <Menu className="h-6 w-6 stroke-[1.5]" />
-        </button>
-      </div>
-    );
-  }
+  // Manage body state and escape key bindings for strict accessibility rules
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = "unset";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
+
+  // Dynamic Page Page Mutators to create structural scaling and brightness shifts underneath
+  useEffect(() => {
+    const mainContent =
+      document.getElementById("main-layout-content") ||
+      document.querySelector("main");
+    if (!mainContent) return;
+
+    if (isOpen) {
+      mainContent.style.transition =
+        "transform 500ms cubic-bezier(0.25, 1, 0.5, 1), filter 500ms cubic-bezier(0.25, 1, 0.5, 1)";
+      mainContent.style.transform = "scale(0.985)";
+      mainContent.style.filter = "blur(10px) brightness(0.9)";
+    } else {
+      mainContent.style.transform = "none";
+      mainContent.style.filter = "none";
+    }
+  }, [isOpen]);
+
+  if (!mounted) return null;
 
   return (
-    <div className="lg:hidden flex items-center">
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger
-          type="button"
-          className="text-[#0F172A] hover:text-[#163B65] h-10 w-10 flex items-center justify-center rounded-full transition-colors focus-visible:outline-none"
-          aria-label="Open Fashion Discovery Menu"
-        >
-          <Menu className="h-6 w-6 stroke-[1.5]" />
-        </SheetTrigger>
+    /* FIXED Breakpoint: Changed from md:hidden to lg:hidden to cover 412px to 1024px viewport widths */
+    <div ref={containerRef} className="lg:hidden flex items-center">
+      {/* TRIGGER INTERACTION:
+        Custom unequal vector lines morphing elegantly into a balanced X structure.
+      */}
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen ? "true" : "false"} // Fixed: Proper boolean string value
+        aria-controls="editorial-navigation-sheet"
+        aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+        className="relative z-50 w-10 h-10 flex flex-col items-end justify-center gap-1.5 focus:outline-none group"
+      >
+        <motion.span
+          animate={
+            isOpen
+              ? { rotate: 45, y: 4, width: "20px" }
+              : { rotate: 0, y: 0, width: "22px" }
+          }
+          transition={TOGGLE_SPRING}
+          className="h-[1.5px] bg-[#163B65] block transform origin-center"
+        />
+        <motion.span
+          animate={
+            isOpen
+              ? { rotate: -45, y: -3.5, width: "20px" }
+              : { rotate: 0, y: 0, width: "14px" }
+          }
+          transition={TOGGLE_SPRING}
+          className="h-[1.5px] bg-[#163B65] block transform origin-center"
+        />
+      </button>
 
-        {/* 
-          FULL HEIGHT FASHION DISCOVERY PANEL 
-          Fulfills SMART SHOPPING DESIGN SYSTEM V1 (70% White Background Canvas)
-        */}
-        <SheetContent
-          side="right"
-          className="w-full sm:max-w-[440px] h-[100dvh] bg-white border-none p-0 flex flex-col justify-between rounded-none [&>button]:hidden overflow-hidden"
-        >
-          {/* SECTION 1: HEADER AREA (100px Height, Spacing & Bottom Divider) */}
-          <div className="h-[100px] px-6 sm:px-8 border-b border-[#F1F5F9] flex items-center justify-between shrink-0 bg-white z-10">
-            <SheetTitle className="text-left m-0 p-0">
-              <NavbarLogo />
-            </SheetTitle>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="w-10 h-10 flex items-center justify-center text-[#0F172A] hover:text-[#163B65] transition-colors rounded-full bg-[#F8FAFC] border border-[#E2E8F0]"
-              aria-label="Close menu"
+      {/* EXPANDABLE DOWNWARD NAVIGATION CANVAS SHEET */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Click Outside Interceptor overlay to gracefully collapse canvas sheet */}
+            <div
+              className="fixed inset-0 top-16 bg-transparent z-40"
+              onClick={() => setIsOpen(false)}
+            />
+
+            <motion.div
+              id="editorial-navigation-sheet"
+              role="dialog"
+              aria-modal="true"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "58vh", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={PANEL_SPRING}
+              className="fixed top-0 inset-x-0 w-full bg-[#FDFBF9] border-b border-[#163B65]/10 rounded-b-4xl shadow-[0_20px_40px_rgba(22,59,101,0.06)] z-40 pt-20 pb-6 flex flex-col justify-between overflow-hidden"
             >
-              <X className="w-5 h-5 stroke-[1.8]" />
-            </button>
-          </div>
-
-          {/* SCROLLABLE SURFACE FOR ECOSYSTEM CONTENT */}
-          <div className="flex-1 overflow-y-auto scrollbar-none pb-8 space-y-8 native-scroll-momentum">
-            {/* SECTION 2: BRAND EMOTIONAL CONNECTION */}
-            <div className="pt-6 px-6 sm:px-8 space-y-2">
-              <span className="font-sans text-[11px] font-bold tracking-[0.12em] text-[#F97316] uppercase block">
-                Premium Fashion. Closer To Home.
-              </span>
-              <h2 className="font-serif text-[28px] font-bold text-[#163B65] tracking-tight leading-tight">
-                Fashion Beyond Metro Cities
-              </h2>
-              <p className="font-sans text-[14px] text-[#64748B] leading-relaxed font-medium">
-                Discover international fashion brands, premium retail
-                destinations, and communities connected through style.
-              </p>
-            </div>
-
-            {/* SECTION 3: PRIMARY CAPSULE NAVIGATION */}
-            <nav className="px-6 sm:px-8" aria-label="Ecosystem Navigation">
-              <AnimatePresence>
-                {open && (
+              {/* PRIMARY EMBEDDED NAVIGATION SYSTEM */}
+              <div className="flex-1 overflow-y-auto px-12 py-4 scrollbar-none">
+                <motion.nav
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="space-y-7.5 text-left"
+                >
+                  {/* NAVIGATION LINK: HOME */}
                   <motion.div
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className="space-y-3"
+                    variants={linkVariants}
+                    className="relative flex items-center group"
                   >
-                    {primaryNavItems.map((item) => {
-                      const isActive = pathname === item.href;
-                      return (
-                        <motion.div key={item.href} variants={itemVariants}>
-                          <Link
-                            href={item.href}
-                            onClick={() => setOpen(false)}
-                            className={`group w-full min-h-[68px] px-5 py-3.5 flex items-center justify-between rounded-full border bg-white transition-all duration-200 ${
-                              isActive
-                                ? "border-[#163B65] bg-[#F8FAFC]"
-                                : "border-[#E2E8F0] hover:border-[#CBD5E1] hover:bg-[#F8FAFC]"
-                            }`}
-                          >
-                            <div className="flex flex-col text-left pr-4">
-                              <span
-                                className={`font-sans text-[16px] font-semibold tracking-wide flex items-center gap-1.5 ${
-                                  isActive ? "text-[#163B65]" : "text-[#0F172A]"
-                                }`}
-                              >
-                                {item.label}
-                                {isActive && (
-                                  <span
-                                    className="w-1.5 h-1.5 rounded-full bg-[#F97316]"
-                                    aria-hidden="true"
-                                  />
-                                )}
-                              </span>
-                              <span className="font-sans text-[12px] text-[#64748B] font-medium mt-0.5">
-                                {item.sub}
-                              </span>
-                            </div>
+                    {pathname === "/" && (
+                      <span className="absolute -left-4 w-0.5 h-6.5 bg-[#163B65]" />
+                    )}
+                    <motion.div
+                      whileTap={{ scale: 1.02 }}
+                      transition={TEXT_SPRING}
+                    >
+                      <Link
+                        href="/"
+                        onClick={() => setIsOpen(false)}
+                        className={`font-sans font-semibold text-[23px] tracking-wide relative py-0.5 inline-block transition-all duration-300 group-hover:translate-x-1.5 ${
+                          pathname === "/"
+                            ? "text-[#163B65]"
+                            : "text-[#163B65]/80"
+                        }`}
+                      >
+                        Home
+                        <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#F97316] transition-all duration-300 group-hover:w-full" />
+                      </Link>
+                    </motion.div>
+                  </motion.div>
 
-                            <div
-                              className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors shrink-0 ${
-                                isActive
-                                  ? "bg-[#163B65] text-white"
-                                  : "bg-[#F1F5F9] text-[#64748B] group-hover:bg-[#E2E8F0] group-hover:text-[#163B65]"
-                              }`}
-                            >
-                              <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                            </div>
+                  {/* NAVIGATION LINK: BRANDS */}
+                  <motion.div
+                    variants={linkVariants}
+                    className="relative flex items-center group"
+                  >
+                    {pathname === "/brands" && (
+                      <span className="absolute -left-4 w-0.5 h-6.5 bg-[#163B65]" />
+                    )}
+                    <motion.div
+                      whileTap={{ scale: 1.02 }}
+                      transition={TEXT_SPRING}
+                    >
+                      <Link
+                        href="/brands"
+                        onClick={() => setIsOpen(false)}
+                        className={`font-sans font-semibold text-[23px] tracking-wide relative py-0.5 inline-block transition-all duration-300 group-hover:translate-x-1.5 ${
+                          pathname === "/brands"
+                            ? "text-[#163B65]"
+                            : "text-[#163B65]/80"
+                        }`}
+                      >
+                        Brands
+                        <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#F97316] transition-all duration-300 group-hover:w-full" />
+                      </Link>
+                    </motion.div>
+                  </motion.div>
+
+                  {/* NAVIGATION LINK: STORE LOCATOR */}
+                  <motion.div
+                    variants={linkVariants}
+                    className="relative flex items-center group"
+                  >
+                    {pathname === "/store-locator" && (
+                      <span className="absolute -left-4 w-0.5 h-6.5 bg-[#163B65]" />
+                    )}
+                    <motion.div
+                      whileTap={{ scale: 1.02 }}
+                      transition={TEXT_SPRING}
+                    >
+                      <Link
+                        href="/store-locator"
+                        onClick={() => setIsOpen(false)}
+                        className={`font-sans font-semibold text-[23px] tracking-wide relative py-0.5 inline-block transition-all duration-300 group-hover:translate-x-1.5 ${
+                          pathname === "/store-locator"
+                            ? "text-[#163B65]"
+                            : "text-[#163B65]/80"
+                        }`}
+                      >
+                        Store Locator
+                        <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#F97316] transition-all duration-300 group-hover:w-full" />
+                      </Link>
+                    </motion.div>
+                  </motion.div>
+
+                  {/* INTERACTIVE EXPANDABLE MAGAZINE BRIDGE: ABOUT NODE */}
+                  <motion.div variants={linkVariants} className="space-y-4">
+                    <div className="relative flex items-center justify-between pr-4 group">
+                      {pathname.startsWith("/about") && (
+                        <span className="absolute -left-4 w-0.5 h-6.5 bg-[#163B65]" />
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => setIsAboutExpanded(!isAboutExpanded)}
+                        className={`font-sans font-semibold text-[23px] tracking-wide relative py-0.5 text-left inline-flex items-center gap-2 focus:outline-none transition-all duration-300 group-hover:translate-x-1.5 ${
+                          pathname.startsWith("/about")
+                            ? "text-[#163B65]"
+                            : "text-[#163B65]/80"
+                        }`}
+                      >
+                        <span>About</span>
+                        <motion.div
+                          animate={{ rotate: isAboutExpanded ? 180 : 0 }}
+                          transition={TEXT_SPRING}
+                          className="mt-0.5"
+                        >
+                          <ChevronDown className="w-4 h-4 text-[#163B65]/40 stroke-[1.8]" />
+                        </motion.div>
+                      </button>
+                    </div>
+
+                    {/* UNFOLDING MAGAZINE SECONDARY LINKS CONTAINER */}
+                    <AnimatePresence initial={false}>
+                      {isAboutExpanded && (
+                        <motion.div
+                          variants={submenuVariants}
+                          initial="hidden"
+                          animate="visible"
+                          exit="exit"
+                          className="pl-4 border-l border-[#163B65]/10 flex flex-col space-y-3.5 overflow-hidden"
+                        >
+                          <Link
+                            href="/about-us"
+                            onClick={() => setIsOpen(false)}
+                            className="font-sans font-medium text-[15px] text-[#163B65]/70 hover:text-[#163B65] transition-colors duration-200"
+                          >
+                            About Us
+                          </Link>
+                          <Link
+                            href="/team"
+                            onClick={() => setIsOpen(false)}
+                            className="font-sans font-medium text-[15px] text-[#163B65]/70 hover:text-[#163B65] transition-colors duration-200"
+                          >
+                            Our Team
+                          </Link>
+                          <Link
+                            href="/careers"
+                            onClick={() => setIsOpen(false)}
+                            className="font-sans font-medium text-[15px] text-[#163B65]/70 hover:text-[#163B65] transition-colors duration-200"
+                          >
+                            Careers
                           </Link>
                         </motion.div>
-                      );
-                    })}
+                      )}
+                    </AnimatePresence>
                   </motion.div>
-                )}
-              </AnimatePresence>
-            </nav>
 
-            {/* SECTION 4: FEATURED BRANDS HORIZONTAL SCROLL PREVIEW */}
-            <div className="space-y-3">
-              <div className="px-6 sm:px-8 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#F97316]" />
-                <h3 className="font-serif text-[16px] font-bold text-[#163B65]">
-                  Featured Brands
-                </h3>
-              </div>
-              <div className="w-full overflow-x-auto scrollbar-none flex gap-2 px-6 sm:px-8 pb-1 snap-x select-none">
-                {featuredBrands.map((brand) => (
-                  <span
-                    key={brand}
-                    className="font-sans text-[13px] font-semibold text-[#334155] whitespace-nowrap bg-[#F8FAFC] border border-[#E2E8F0] px-4 py-2 rounded-full hover:border-[#163B65] hover:text-[#163B65] transition-colors snap-center"
+                  {/* NAVIGATION LINK: CONTACT */}
+                  <motion.div
+                    variants={linkVariants}
+                    className="relative flex items-center group"
                   >
-                    {brand}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* SECTION 5: STORE NETWORK MOTIF ACCENT */}
-            <div className="px-6 sm:px-8 space-y-3">
-              <div className="flex items-center gap-2">
-                <Building className="w-4 h-4 text-[#163B65]" />
-                <h3 className="font-serif text-[16px] font-bold text-[#163B65]">
-                  Closer To Home
-                </h3>
-              </div>
-
-              {/* Elegant Connected Metric Row */}
-              <div className="relative p-4 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[20px] overflow-hidden">
-                {/* Subtle dot-line connection graphic path background */}
-                <div
-                  className="absolute top-1/2 left-4 right-4 h-[1px] bg-dashed bg-[#E2E8F0] -translate-y-1/2 z-0"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(to right, #E2E8F0 40%, rgba(255,255,255,0) 0%)",
-                    backgroundSize: "6px 1px",
-                    backgroundRepeat: "repeat-x",
-                  }}
-                />
-
-                <div className="relative z-10 flex justify-between items-center px-2">
-                  {networkMetrics.map((metric, idx) => (
-                    <div
-                      key={idx}
-                      className="flex flex-col items-center bg-[#F8FAFC] px-3"
+                    {pathname === "/contact" && (
+                      <span className="absolute -left-4 w-0.5 h-6.5 bg-[#163B65]" />
+                    )}
+                    <motion.div
+                      whileTap={{ scale: 1.02 }}
+                      transition={TEXT_SPRING}
                     >
-                      <span className="font-serif text-[20px] font-bold text-[#163B65] tracking-tight flex items-center gap-1">
-                        {metric.value}
-                        {idx === 0 && (
-                          <span className="w-1 h-1 rounded-full bg-[#F97316]" />
-                        )}
-                      </span>
-                      <span className="font-sans text-[11px] font-bold text-[#64748B] uppercase tracking-wider mt-0.5">
-                        {metric.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                      <Link
+                        href="/contact"
+                        onClick={() => setIsOpen(false)}
+                        className={`font-sans font-semibold text-[23px] tracking-wide relative py-0.5 inline-block transition-all duration-300 group-hover:translate-x-1.5 ${
+                          pathname === "/contact"
+                            ? "text-[#163B65]"
+                            : "text-[#163B65]/80"
+                        }`}
+                      >
+                        Contact
+                        <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#F97316] transition-all duration-300 group-hover:w-full" />
+                      </Link>
+                    </motion.div>
+                  </motion.div>
+                </motion.nav>
               </div>
-            </div>
-          </div>
 
-          {/* FOOTER ACTIONS AREA (20% Blue, 10% Orange System Balance Rules) */}
-          <div className="p-6 sm:p-8 bg-white border-t border-[#F1F5F9] space-y-3 shrink-0">
-            {/* SECTION 6: PRIMARY ACTION */}
-            <Link
-              href="/store-locator"
-              onClick={() => setOpen(false)}
-              className="w-full h-13 flex items-center justify-center gap-x-2 bg-[#163B65] text-white font-sans text-[15px] font-semibold rounded-full shadow-sm hover:bg-[#214F84] active:scale-[0.99] transition-all focus-visible:outline-none"
-            >
-              <MapPin className="w-4 h-4 stroke-[2]" />
-              <span>Find Nearest Store</span>
-            </Link>
-
-            {/* SECTION 7: SECONDARY OUTLINED ACTIONS */}
-            <div className="grid grid-cols-2 gap-3">
-              <Link
-                href="/brands"
-                onClick={() => setOpen(false)}
-                className="h-11 flex items-center justify-center bg-white border border-[#CBD5E1] text-[#334155] font-sans text-[13px] font-semibold rounded-full hover:bg-[#F8FAFC] hover:border-[#94A3B8] transition-colors"
+              {/* REFINED ARCHITECTURAL BOTTOM CTA */}
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25, duration: 0.4 }}
+                className="pt-4 pb-4 border-t border-[#163B65]/5 shrink-0 flex justify-center bg-[#FDFBF9]"
               >
-                Explore Brands
-              </Link>
-              <Link
-                href="/contact"
-                onClick={() => setOpen(false)}
-                className="h-11 flex items-center justify-center bg-white border border-[#CBD5E1] text-[#334155] font-sans text-[13px] font-semibold rounded-full hover:bg-[#F8FAFC] hover:border-[#94A3B8] transition-colors"
-              >
-                Contact Us
-              </Link>
-            </div>
-          </div>
-        </SheetContent>
-      </Sheet>
+                <Link
+                  href="/store-locator"
+                  onClick={() => setIsOpen(false)}
+                  className="group inline-flex items-center gap-2 font-sans font-medium text-[12px] tracking-[0.12em] text-[#163B65] uppercase relative py-1 focus:outline-none"
+                >
+                  <span>Find Your Nearest Store</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#163B65]/50 group-hover:text-[#F97316] group-hover:translate-x-1 transition-all duration-300 stroke-[1.5]" />
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-[#163B65] transition-all duration-300 group-hover:w-full" />
+                </Link>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 });

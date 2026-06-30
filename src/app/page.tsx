@@ -1,11 +1,10 @@
+// app/page.tsx
 import HomeHero from "@/features/home/components/HomeHero";
 import FeaturedBrands from "@/features/home/components/FeaturedBrands";
-import RetailScale from "@/features/home/components/RetailScale";
-import OurJourney from "@/features/home/components/OurJourney";
 import WhySmartShopping from "@/features/home/components/WhySmartShopping";
 import StoreNetwork from "@/features/home/components/StoreNetwork";
 import FashionExperience from "@/features/home/components/FashionExperience";
-import TrustSection from "@/features/home/components/TrustSection";
+import OurJourney from "@/features/home/components/OurJourney";
 
 export const metadata = {
   title:
@@ -16,15 +15,24 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <main className="w-full min-h-screen bg-white text-[#0F172A] selection:bg-[#F97316] selection:text-white">
+    <main className="w-full min-h-screen bg-[#F5F2EC] text-[#0F172A] selection:bg-[#163B65] selection:text-white overflow-x-hidden">
+      {/* SECTION 1: IMMERSIVE HERO */}
       <HomeHero />
+
+      {/* SECTION 2: DISCOVER BRANDS (Horizontal Snap Carousel on Mobile) */}
       <FeaturedBrands />
-      <RetailScale />
-      <OurJourney />
+
+      {/* SECTION 3: WHY SMART SHOPPING? (Expandable Editorial Block on Mobile) */}
       <WhySmartShopping />
+
+      {/* SECTION 4: DISCOVER YOUR CITY (Bottom Sheet Drawer Asset Trigger on Mobile) */}
       <StoreNetwork />
+
+      {/* SECTION 5: THE SMART SHOPPING EXPERIENCE (Z-Index Interactive Story Stack on Mobile) */}
       <FashionExperience />
-      <TrustSection />
+
+      {/* SECTION 6: OUR JOURNEY (Instagram-Style Immersive Story Modal on Mobile) */}
+      <OurJourney />
     </main>
   );
 }
