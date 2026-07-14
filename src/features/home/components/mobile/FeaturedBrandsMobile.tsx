@@ -1,70 +1,72 @@
-// features/home/components/FeaturedBrandsMobile.tsx
 "use client";
 
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
-import { Brand } from "@/features/home/data/brandsData";
-
-// Premium spring physics for smooth, elastic material-like movement
-// Fixed: Added 'as const' to ensure proper TypeScript literal types
-const railSpring = { type: "spring" as const, stiffness: 380, damping: 30 };
-const contentSpring = { type: "spring" as const, stiffness: 350, damping: 32 };
+import { FeaturedBrandsConfig } from "@/features/home/data/brandsData";
 
 /**
  * Utility helper to safely extract 3 premium styling tags dynamically
  * from the positioning string if tags aren't defined in the source schema.
  */
-const getDynamicTags = (positioning: string): string[] => {
+const getDynamicTags = (positioning: string, maxItems: number): string[] => {
   const parts = positioning.split(/&|,|and|\s{2,}/);
   return parts
     .map((p) => p.trim())
     .filter((p) => p.length > 3 && p.length < 24)
-    .slice(0, 3);
+    .slice(0, maxItems);
 };
 
-export default function FeaturedBrandsMobile({ brands }: { brands: Brand[] }) {
+interface FeaturedBrandsMobileProps {
+  config: FeaturedBrandsConfig;
+}
+
+export default function FeaturedBrandsMobile({
+  config,
+}: FeaturedBrandsMobileProps) {
   const [activeBrandName, setActiveBrandName] = useState<string | null>(null);
+  const { section, brands, cta, bottomCard, animation, metadata } = config;
 
   const handleRailTap = (name: string) => {
     setActiveBrandName(activeBrandName === name ? null : name);
   };
 
   return (
-    <section className="py-20 bg-[#F5F2EC] md:hidden overflow-hidden">
+    <section className="py-20 bg-background-secondary md:hidden overflow-hidden">
       {/* Editorial Header Block */}
       <div className="px-5 mb-12">
-        <span className="text-[#F97316] font-sans font-medium tracking-[0.25em] text-[10px] uppercase block mb-3">
-          OUR PREMIUM BRANDS
+        <span className="text-accent font-sans font-medium tracking-[0.25em] text-[10px] uppercase block mb-3">
+          {section.taglineMobile}
         </span>
-        <h2 className="font-serif text-3xl text-[#163B65] font-bold tracking-tight leading-[1.2] mb-3">
+        <h2 className="font-serif text-3xl text-text-primary font-bold tracking-tight leading-[1.2] mb-3">
           Explore Our Fashion World
         </h2>
         <p className="font-sans text-sm text-text-secondary leading-relaxed max-w-sm">
-          Premium international brands thoughtfully curated for every member of
-          the family.
+          {section.descriptionMobile}
         </p>
       </div>
 
       {/* Shared Layout Interactive Showroom Canvas */}
       <motion.div layout="position" className="w-full px-5 space-y-0.5">
         {brands.map((brand) => {
-          // Fixed: Removed unused 'idx' variable
           const isOpen = activeBrandName === brand.name;
-          const displayTags = getDynamicTags(brand.positioning);
+          const displayTags = getDynamicTags(
+            brand.positioning,
+            metadata.tags.maxItems,
+          );
 
           return (
             <motion.div
               key={brand.name}
               layout
-              transition={railSpring}
+              transition={animation.railSpring}
               onClick={() => handleRailTap(brand.name)}
               whileTap={{ scale: 0.995 }}
               className={`w-full text-left transition-colors duration-500 ${
                 isOpen
-                  ? "bg-[#FFFFFF]/60 pt-4 pb-8 px-5 rounded-2xl mb-6 shadow-sm border border-[#163B65]/5"
-                  : "border-b border-[#163B65]/10 py-6"
+                  ? "bg-background-main/60 pt-4 pb-8 px-5 rounded-2xl mb-6 shadow-sm border border-border-main/5"
+                  : "border-b border-border-main py-6"
               }`}
             >
               {/* The Fashion Rail Trigger */}
@@ -72,7 +74,9 @@ export default function FeaturedBrandsMobile({ brands }: { brands: Brand[] }) {
                 <motion.h3
                   layout="position"
                   className={`font-serif text-xl tracking-wide transition-colors duration-300 ${
-                    isOpen ? "text-[#163B65] font-bold" : "text-[#163B65]/80"
+                    isOpen
+                      ? "text-text-primary font-bold"
+                      : "text-text-primary/80"
                   }`}
                 >
                   {brand.name}
@@ -82,13 +86,13 @@ export default function FeaturedBrandsMobile({ brands }: { brands: Brand[] }) {
                 <div className="relative w-6 h-6 flex items-center justify-center">
                   <motion.div
                     animate={{ rotate: isOpen ? 45 : 0 }}
-                    transition={contentSpring}
-                    className="absolute w-4 h-[1.5px] bg-[#163B65]/40"
+                    transition={animation.contentSpring}
+                    className="absolute w-4 h-[1.5px] bg-text-primary/40"
                   />
                   <motion.div
                     animate={{ rotate: isOpen ? 45 : 90 }}
-                    transition={contentSpring}
-                    className="absolute w-4 h-[1.5px] bg-[#163B65]/40"
+                    transition={animation.contentSpring}
+                    className="absolute w-4 h-[1.5px] bg-text-primary/40"
                   />
                 </div>
               </div>
@@ -100,7 +104,7 @@ export default function FeaturedBrandsMobile({ brands }: { brands: Brand[] }) {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
-                    transition={railSpring}
+                    transition={animation.railSpring}
                     className="overflow-hidden"
                   >
                     {/* Architectural Accent Line */}
@@ -112,27 +116,27 @@ export default function FeaturedBrandsMobile({ brands }: { brands: Brand[] }) {
                         duration: 0.5,
                         ease: "easeOut",
                       }}
-                      className="h-[1.5px] bg-[#F97316] w-16 mt-4 mb-6"
+                      className="h-[1.5px] bg-accent w-16 mt-4 mb-6"
                     />
 
                     {/* Immersive Editorial Campaign Image (Occupies ~70% visual area) */}
-                    <div className="relative aspect-3/4 w-full bg-[#F5F2EC] rounded-[24px] overflow-hidden mb-6">
+                    <div className="relative aspect-3/4 w-full bg-background-secondary rounded-[24px] overflow-hidden mb-6">
                       <motion.div
                         initial={{ scale: 0.96, opacity: 0.85 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.96, opacity: 0.85 }}
-                        transition={contentSpring}
+                        transition={animation.contentSpring}
                         className="relative w-full h-full"
                       >
                         <Image
-                          src={brand.image}
-                          alt={`${brand.name} Architectural Luxury Campaign`}
+                          src={brand.image.src}
+                          alt={brand.image.alt || brand.name}
                           fill
-                          sizes="90vw"
-                          className="object-cover object-center"
-                          priority
+                          sizes={brand.image.sizes.mobile}
+                          className={`${brand.image.objectFit} ${brand.image.objectPosition}`}
+                          priority={brand.image.priority}
                         />
-                        <div className="absolute inset-0 bg-linear-to-t from-[#0F172A]/20 via-transparent to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-linear-to-t from-text-primary/20 via-transparent to-transparent pointer-events-none" />
                       </motion.div>
                     </div>
 
@@ -140,7 +144,7 @@ export default function FeaturedBrandsMobile({ brands }: { brands: Brand[] }) {
                     <motion.div
                       initial={{ opacity: 0, y: 15 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1, ...contentSpring }}
+                      transition={{ delay: 0.1, ...animation.contentSpring }}
                       className="space-y-5"
                     >
                       <p className="font-sans text-sm text-text-secondary leading-relaxed whitespace-normal wrap-break-word">
@@ -153,7 +157,7 @@ export default function FeaturedBrandsMobile({ brands }: { brands: Brand[] }) {
                           {displayTags.map((tag, i) => (
                             <span
                               key={i}
-                              className="font-sans text-[10px] font-semibold tracking-wide text-[#163B65] bg-[#F5F2EC] px-3 py-1.5 rounded-full uppercase"
+                              className="font-sans text-[10px] font-semibold tracking-wide text-text-primary bg-background-secondary px-3 py-1.5 rounded-full uppercase"
                             >
                               {tag}
                             </span>
@@ -162,18 +166,18 @@ export default function FeaturedBrandsMobile({ brands }: { brands: Brand[] }) {
                       )}
 
                       {/* Editorial CTA Mechanics */}
-                      <div className="pt-5 flex flex-col gap-3 border-t border-[#163B65]/5">
+                      <div className="pt-5 flex flex-col gap-3 border-t border-border-main/5">
                         <a
                           href={brand.link}
                           onClick={(e) => e.stopPropagation()}
-                          className="inline-flex items-center gap-2 font-sans text-xs font-bold tracking-widest uppercase text-[#F97316] w-fit"
+                          className="inline-flex items-center gap-2 font-sans text-xs font-bold tracking-widest uppercase text-accent w-fit"
                         >
-                          <span>Visit Official Website</span>
+                          <span>{cta.primary.label}</span>
                           <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
                         </a>
 
-                        <div className="font-sans text-[11px] font-medium text-[#163B65]/50 tracking-wide">
-                          Available At Smart Shopping
+                        <div className="font-sans text-[11px] font-medium text-text-primary/50 tracking-wide">
+                          {brand.metadata.availabilityText}
                         </div>
                       </div>
                     </motion.div>
@@ -186,19 +190,29 @@ export default function FeaturedBrandsMobile({ brands }: { brands: Brand[] }) {
       </motion.div>
 
       {/* Elegant Architectural Bottom Action Card */}
-      <div className="mt-16 mx-5 bg-[#FFFFFF] border border-[#163B65]/5 px-6 py-10 rounded-2xl text-center shadow-sm">
-        <h4 className="font-serif text-2xl text-[#163B65] font-bold tracking-tight mb-2">
-          Can&apos;t Decide?
+      <div className="mt-16 mx-5 bg-background-main border border-border-main/5 px-6 py-10 rounded-2xl text-center shadow-sm">
+        <h4 className="font-serif text-2xl text-text-primary font-bold tracking-tight mb-2">
+          {bottomCard.titleLines.map((line, index) => (
+            <span key={index}>
+              {line}
+              {index < bottomCard.titleLines.length - 1 && <br />}
+            </span>
+          ))}
         </h4>
         <p className="font-sans text-xs sm:text-sm text-text-secondary leading-relaxed max-w-xs mx-auto mb-6">
-          Visit your nearest Smart Shopping store and experience every
-          collection in person.
+          {bottomCard.descriptionLines.map((line, index) => (
+            <span key={index}>
+              {line}
+              {index < bottomCard.descriptionLines.length - 1 && <br />}
+            </span>
+          ))}
         </p>
         <a
-          href="/store-locator"
-          className="inline-flex items-center justify-center gap-2.5 w-full font-sans text-xs font-bold tracking-widest uppercase text-[#FFFFFF] bg-[#163B65] py-4 px-6 rounded-xl shadow-sm transition-transform active:scale-[0.98]"
+          href={bottomCard.cta.url}
+          aria-label={bottomCard.cta.ariaLabel}
+          className="inline-flex items-center justify-center gap-2.5 w-full font-sans text-xs font-bold tracking-widest uppercase text-white bg-button-primary-bg py-4 px-6 rounded-xl shadow-sm transition-transform active:scale-[0.98]"
         >
-          <span>Find A Store</span>
+          <span>{bottomCard.cta.label}</span>
           <ArrowRight className="w-4 h-4 shrink-0" />
         </a>
       </div>

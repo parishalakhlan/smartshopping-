@@ -1,0 +1,43 @@
+Add to StoresConfig interface in stores.ts:
+
+
+
+export interface StoresConfig {
+  section: {
+    id: string;
+    title: string;
+    subtitle: string;
+  };
+  regionalFootprints: StateFootprint[];
+  stores: Store[];
+  stats: {
+    showroomsLive: number;
+    globalBrands: number;
+    clientsServed: string;
+    territoriesOpen: number;
+    showroomsLabel: string;
+    brandsLabel: string;
+    clientsLabel: string;
+    territoriesLabel: string;
+  };
+  metadata: {
+    sectionTitles: {
+      network: string;
+      locator: string;
+    };
+  };
+}
+
+
+
+Add to storesConfig:
+stats: {
+  showroomsLive: 25,
+  globalBrands: 8,
+  clientsServed: "50k+",
+  territoriesOpen: 5,
+  showroomsLabel: "Showrooms Live",
+  brandsLabel: "Global Brands",
+  clientsLabel: "Clients Served",
+  territoriesLabel: "Territories Open",
+},

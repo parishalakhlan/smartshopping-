@@ -1,0 +1,326 @@
+export interface UniverseNode {
+  id: string;
+  title: string;
+  overview: string;
+  purpose: string;
+  impact: string;
+  vision: string;
+  image: string;
+  angle: number; // For circular layout positioning calculations
+}
+
+export interface EditorialPillar {
+  id: string;
+  title: string;
+  mission: string;
+  operations: string[];
+  team: string;
+  achievements: string[];
+  opportunities: string;
+  image: string;
+}
+
+export interface CapabilityItem {
+  id: string;
+  title: string;
+  description: string;
+  outcome: string;
+  image: string;
+}
+
+export interface JourneyStage {
+  id: string;
+  stageName: string;
+  responsibilities: string[];
+  technology: string;
+  people: string;
+  outcome: string;
+}
+
+export interface FAQItem {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+export const universeNodes: UniverseNode[] = [
+  {
+    id: "retail-ops",
+    title: "Retail Operations",
+    overview:
+      "Managing premium spatial experiences across metropolitan hubs using smart retail paradigms.",
+    purpose:
+      "To bridge immersive sensory design with absolute operational performance.",
+    impact: "Over 140 luxury flagship footprints active globally.",
+    vision:
+      "Transitioning stores to dynamic checkoutless premium venues by 2028.",
+    image:
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1200&auto=format&fit=crop",
+    angle: 0,
+  },
+  {
+    id: "distribution",
+    title: "Supply Distribution",
+    overview:
+      "Hyper-automated logistics nodes managing premium global fashion allocations.",
+    purpose:
+      "To enable zero-lag predictive supply pipelines directly to partner floors.",
+    impact: "99.8% precision cross-border custom clearances.",
+    vision:
+      "Autonomous distribution fleets running on fully carbon-neutral energy grids.",
+    image:
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop",
+    angle: 51.4,
+  },
+  {
+    id: "brand-partners",
+    title: "Brand Partnerships",
+    overview:
+      "Curating deep strategic alliances with global design houses and heritage maisons.",
+    purpose: "To secure exclusive, uncompromised global product allocations.",
+    impact: "Exclusive distribution tiers with 85+ global luxury houses.",
+    vision: "Direct decentralised pipeline sync for hyper-rare couture drops.",
+    image:
+      "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?q=80&w=1200&auto=format&fit=crop",
+    angle: 102.8,
+  },
+  {
+    id: "technology",
+    title: "Retail Technology",
+    overview:
+      "The core algorithmic software layer powering real-time inventory telemetry.",
+    purpose:
+      "Eliminating stock friction while preserving customer personal privacy layers.",
+    impact:
+      "Processing 4.2 million micro-transactions daily with zero downtime.",
+    vision:
+      "Generative ambient store configurations responding to predictive data.",
+    image:
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
+    angle: 154.2,
+  },
+  {
+    id: "franchise-mgmt",
+    title: "Franchise Management",
+    overview:
+      "White-glove structural scaffolding built to upscale high-net-worth commercial profiles.",
+    purpose:
+      "To guarantee master brand execution continuity across worldwide segments.",
+    impact: "Average franchise setup optimization timeline reduced by 40%.",
+    vision: "Global interactive commercial syndication platform deployment.",
+    image:
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
+    angle: 205.6,
+  },
+  {
+    id: "regional-growth",
+    title: "Regional Growth",
+    overview:
+      "Securing tier-1 premium physical land banks and urban retail allocations.",
+    purpose:
+      "To position physical assets in high-yield demographic epicenters.",
+    impact:
+      "1.2M square meters of high-street commercial land banks under control.",
+    vision:
+      "Pioneering sustainable architectural master-planned luxury retail ecosystems.",
+    image:
+      "https://images.unsplash.com/photo-1542744094-2ab25be78b90?q=80&w=1200&auto=format&fit=crop",
+    angle: 257.0,
+  },
+  {
+    id: "future-exp",
+    title: "Future Expansion",
+    overview:
+      "Researching the integration of clean materials and dynamic experimental formats.",
+    purpose:
+      "To redefine consumer engagement parameters for upcoming generations.",
+    impact: "7 experimental design labs operating across 3 continents.",
+    vision:
+      "Circular, zero-waste luxury lifestyle structures built from biological polymers.",
+    image:
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop",
+    angle: 308.4,
+  },
+];
+
+export const editorialPillars: EditorialPillar[] = [
+  {
+    id: "pillar-commerce",
+    title: "Ecosystem Flagships",
+    mission:
+      "To turn traditional static commerce spaces into high-fidelity tactile design institutions.",
+    operations: [
+      "Hyper-curated seasonal spatial transformations",
+      "Private client sensory layout suites",
+      "Biometric checkoutless transactional architecture",
+    ],
+    team: "Led by internationally acclaimed architectural designers and premium service operational specialists.",
+    achievements: [
+      "Architectural Review Design Space Award 2025",
+      "Consistent Net Promoter Score of 94 across global clusters",
+    ],
+    opportunities: [
+      "Flagship deployment rights available for primary metropolitan corridors.",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
+  },
+  {
+    id: "pillar-logistics",
+    title: "Predictive Distribution",
+    mission:
+      "Operating a frictionless global supply apparatus that outpaces fast-moving market demands.",
+    operations: [
+      "Automated custom clearance routing algorithms",
+      "Climate-stable luxury textile storage nodes",
+      "Dynamic real-time stock redistribution matrix",
+    ],
+    team: "Engineered by leading systems architects, international maritime experts, and analytics researchers.",
+    achievements: [
+      "Average global transit timeline reduced to 36 hours",
+      "Zero product degradation metrics reached across multi-year cycles",
+    ],
+    opportunities: [
+      "Integration interfaces open for strategic localized enterprise delivery networks.",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=1200&auto=format&fit=crop",
+  },
+  {
+    id: "pillar-intelligence",
+    title: "Ecosystem Intelligence",
+    mission:
+      "Creating the underlying operational OS for high-performance physical retail commerce.",
+    operations: [
+      "Ambient room data tracking frameworks",
+      "Localized demand forecasting models",
+      "Secured decentralized client data ledgers",
+    ],
+    team: "Supervised by computer vision engineers, cognitive data specialists, and cybersecurity professionals.",
+    achievements: [
+      "Predictive stock allocation accuracy optimized to 96.4%",
+      "Mitigated regional inventory overstocking overhead by 32%",
+    ],
+    opportunities: [
+      "Proprietary hardware API access for verified tier-1 global brand partners.",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop",
+  },
+];
+
+export const capabilityItems: CapabilityItem[] = [
+  {
+    id: "cap-retail",
+    title: "Spatial Architecture",
+    description:
+      "Curating spatial design languages that evoke deep sensory resonance rather than standard product viewing.",
+    outcome: "92-minute average dwell time optimization matrix.",
+    image:
+      "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=600&auto=format&fit=crop",
+  },
+  {
+    id: "cap-ops",
+    title: "Operational Infrastructure",
+    description:
+      "Deploying fully unified retail workflows that seamlessly bridge physical storefront execution with digital logistics backend structures.",
+    outcome: "99.98% operational uptime across all physical global nodes.",
+    image:
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop",
+  },
+  {
+    id: "cap-supply",
+    title: "Supply Network",
+    description:
+      "Direct supply layer linking global luxury manufacturing hubs straight to individual metropolitan retail endpoints.",
+    outcome: "Eliminated regional distribution center dependencies.",
+    image:
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=600&auto=format&fit=crop",
+  },
+  {
+    id: "cap-analytics",
+    title: "Behavioral Analytics",
+    description:
+      "Decentralized behavioral telemetry that tracks retail layout efficiency while maintaining anonymized identity protocols.",
+    outcome: "Dynamic layout reconfiguration modeling generated weekly.",
+    image:
+      "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=600&auto=format&fit=crop",
+  },
+];
+
+export const journeyStages: JourneyStage[] = [
+  {
+    id: "stage-1",
+    stageName: "Brand Alignment",
+    responsibilities: [
+      "Evaluating brand identity compatibility matrix",
+      "Analyzing ethical supply line certifications",
+      "Predicting localized regional consumer demographic appeal",
+    ],
+    technology: "Proprietary Brand Affinity Curation Index Engine",
+    people: "Ecosystem Curation Board & Luxury Portfolio Directors",
+    outcome: "Curated selection of forward-thinking elite brand expressions.",
+  },
+  {
+    id: "stage-2",
+    stageName: "Predictive Curation",
+    responsibilities: [
+      "Simulating localized demand models using historical region metrics",
+      "Structuring seasonal product allocation frameworks",
+      "Formulating custom boutique spatial themes",
+    ],
+    technology: "Predictive Asset Telemetry Software",
+    people: "Data Science Teams & Spatial Experience Designers",
+    outcome:
+      "Frictionless regional stock curation plans with minimal overhead risk.",
+  },
+  {
+    id: "stage-3",
+    stageName: "Spatial Evolution",
+    responsibilities: [
+      "Executing precision architectural building configurations",
+      "Deploying advanced ambient computing telemetry arrays",
+      "Sourcing localized premium structural materials",
+    ],
+    technology: "Spatial CAD Simulation Tooling & IoT Sensor Systems",
+    people: "Architectural Craftsmen & Ambient Integration Specialists",
+    outcome:
+      "High-end sensory spaces fully configured for interactive experiences.",
+  },
+  {
+    id: "stage-4",
+    stageName: "Unified Execution",
+    responsibilities: [
+      "Synchronizing local operations with our international fulfillment network",
+      "Activating localized omnichannel client engagement platforms",
+      "Launching continuous physical-to-digital inventory telemetry tracking",
+    ],
+    technology: "Unified Core Retail Operating System Layer",
+    people: "Showroom Directors & Omnichannel Support Crews",
+    outcome: "Self-correcting, high-yielding premium retail operations.",
+  },
+];
+
+export const faqs: FAQItem[] = [
+  {
+    id: "faq-1",
+    question:
+      "How does the Smart Shopping business architecture differ from standard retail holding groups?",
+    answer:
+      "Unlike traditional legacy retail holding companies, we do not simply aggregate brand properties. We operate as a single, fully unified physical infrastructure and technical software operating system. Every brand vertical plugins into our shared logistics network, predictive supply algorithms, and premium spatial real-estate layouts, significantly lowering structural overhead while maximizing agility.",
+  },
+  {
+    id: "faq-2",
+    question:
+      "What governance models protect data privacy across the ambient sensing spaces?",
+    answer:
+      "Our spatial computing telemetry systems operate on an absolute zero-identity tracking protocol. The sensory arrays convert physical human movement metrics into mathematical density fields in real time at the network edge. No facial profiles, biological data, or personal identifying credentials ever cross our servers, ensuring absolute compliance with global privacy regulations.",
+  },
+  {
+    id: "faq-3",
+    question:
+      "How are new business verticals integrated into the Master Group matrix?",
+    answer:
+      "New business proposals face a rigorous cross-examination process supervised by our Ecosystem Curation Board. Verticals must show clear structural synergy with our core distribution lanes, maintain a premium luxury brand position, and actively utilize our shared software stack rather than attempting to introduce isolated legacy applications.",
+  },
+];

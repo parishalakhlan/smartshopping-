@@ -1,0 +1,9 @@
+  PartnersHeroMobile.tsx
+        OpportunityWheel.tsx
+        ModelsStack.tsx
+        GrowthMapReveal.tsx
+        JourneySteps.tsx
+        StoriesCarousel.tsx
+        FAQReveal.tsx
+        PartnerFormDrawer.tsx
+        ClosingCTA.tsx    
