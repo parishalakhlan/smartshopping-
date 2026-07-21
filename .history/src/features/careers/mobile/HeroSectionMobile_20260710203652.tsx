@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
-import { MagneticButtonMobile } from "./MagneticButtonMobile";
+import { MagneticButtonMobile } from "@/";
 
 interface MobileProps {
   scrollToSection: (id: string) => void;

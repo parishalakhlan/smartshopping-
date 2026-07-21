@@ -1,0 +1,46 @@
+"use client";
+
+import React from "react";
+import Link from "next/link";
+export const FinalInvitationSectionMobile: React.FC = () => {
+  return (
+    <section
+      id="invitation-mobile"
+      className="w-full bg-navbar-active text-white py-14 px-4 relative overflow-hidden font-sans lg:hidden"
+    >
+      {/* Scaled Background Decorative Text */}
+      <div className="absolute inset-0 w-full h-full opacity-[0.03] pointer-events-none select-none flex items-center justify-center font-serif font-extrabold text-[22vw] tracking-wider text-white">
+        CAREER
+      </div>
+
+      <div className="max-w-md mx-auto text-center space-y-6 relative z-10">
+        <div className="space-y-2">
+          <span className="text-[10px] text-accent font-bold tracking-[0.25em] uppercase block">
+            Join Us
+          </span>
+          <h2 className="font-serif text-2xl font-bold tracking-tight leading-snug">
+            Ready to Start Your Journey?
+          </h2>
+          <p className="text-white/70 text-xs font-normal leading-relaxed">
+            Whether you&apos;re starting your career or looking to scale new
+            heights, we want to hear your story.
+          </p>
+        </div>
+
+        {/* Stacked Full-Width Buttons for Mobile Fingers */}
+        <div className="flex flex-col gap-3 w-full pt-2">
+          <Link href="#openings" scroll={true}>
+            <button className="w-full py-3.5 bg-button-secondary-bg text-button-secondary-text active:bg-accent-hover border border-button-secondary-bg font-bold text-xs rounded-none transition-colors">
+              Apply Now
+            </button>
+          </Link>
+          <Link href="/contact">
+            <button className="w-full py-3.5 bg-transparent text-white border border-white/20 active:border-white active:bg-white/5 text-xs rounded-none transition-all">
+              Contact Recruitment
+            </button>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
