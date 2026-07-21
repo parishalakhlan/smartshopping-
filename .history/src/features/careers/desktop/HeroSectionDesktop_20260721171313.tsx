@@ -18,11 +18,10 @@ export const HeroSectionDesktop: React.FC = () => {
     <section className="relative w-full h-[80vh] min-h-[600px] bg-background-secondary/30 flex items-center overflow-hidden border-b border-border-main hidden lg:flex">
       <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
         <Image
-          src="/interior/interiro4.webp"
+          src="/interior/interiro8.webp"
           alt="Smart Shopping Editorial Workspace Environment"
           fill
           priority
-          sizes="100vw"
           className="object-cover opacity-15 scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background-main via-background-main/5 to-transparent" />
@@ -74,17 +73,15 @@ export const HeroSectionDesktop: React.FC = () => {
                 src="/employees/employee1.webp"
                 alt="Store Operations"
                 fill
-                sizes="(max-width: 768px) 100vw, 40vw"
                 className="object-cover"
               />
             </div>
             <div className="absolute left-0 bottom-0 w-[50%] h-[200px] bg-background-main overflow-hidden border border-border-main shadow-md p-2">
               <div className="relative w-full h-full bg-background-secondary overflow-hidden">
                 <Image
-                  src="/employees/employee4.webp"
+                  src="/employees/employee7.webp"
                   alt="Visual Merchandising"
                   fill
-                  sizes="(max-width: 768px) 50vw, 25vw"
                   className="object-cover"
                 />
               </div>

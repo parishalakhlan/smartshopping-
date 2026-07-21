@@ -71,7 +71,7 @@ export const HeroSectionDesktop: React.FC = () => {
           <div className="relative h-[400px] w-full">
             <div className="absolute right-0 top-0 w-[80%] h-[350px] bg-background-secondary overflow-hidden border border-border-main">
               <Image
-                src="/employees/employee1.webp"
+                src="/employees/employee2.webp"
                 alt="Store Operations"
                 fill
                 sizes="(max-width: 768px) 100vw, 40vw"
@@ -81,7 +81,7 @@ export const HeroSectionDesktop: React.FC = () => {
             <div className="absolute left-0 bottom-0 w-[50%] h-[200px] bg-background-main overflow-hidden border border-border-main shadow-md p-2">
               <div className="relative w-full h-full bg-background-secondary overflow-hidden">
                 <Image
-                  src="/employees/employee4.webp"
+                  src="/employees/employee7.webp"
                   alt="Visual Merchandising"
                   fill
                   sizes="(max-width: 768px) 50vw, 25vw"

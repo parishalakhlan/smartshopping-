@@ -127,7 +127,7 @@ export const verticalsConfig: VerticalsConfig = {
     },
 
     image: {
-      src: "/interior/interiro7.webp",
+      src: "/interior/interioro8.webp",
       alt: "Modern Smart Shopping Retail Store",
       objectFit: "object-cover",
       objectPosition: "object-center",

@@ -81,7 +81,7 @@ export const HeroSectionDesktop: React.FC = () => {
             <div className="absolute left-0 bottom-0 w-[50%] h-[200px] bg-background-main overflow-hidden border border-border-main shadow-md p-2">
               <div className="relative w-full h-full bg-background-secondary overflow-hidden">
                 <Image
-                  src="/employees/employee4.webp"
+                  src="/employees/employee3.webp"
                   alt="Visual Merchandising"
                   fill
                   sizes="(max-width: 768px) 50vw, 25vw"
