@@ -1,0 +1,105 @@
+/* BRAND */
+
+--color-primary: #183a63;
+--color-primary-hover: #102c4d;
+
+--color-accent: #e87a23;
+--color-accent-hover: #d86812;
+
+/* BACKGROUNDS */
+
+--color-background-main: #fcfbf8;
+
+--color-background-secondary: #f6f3ee;
+
+--color-background-tertiary: #eee9e1;
+
+--color-surface: #ffffff;
+
+--color-surface-hover: #faf8f5;
+
+/* TEXT */
+
+--color-text-primary: #202a34;
+
+--color-text-secondary: #56606d;
+
+--color-text-muted: #7c8794;
+
+--color-text-inverse: #ffffff;
+
+/* BORDER */
+
+--color-border-main: #e2ddd4;
+
+--color-border-hover: #cfc6b8;
+
+--color-border-strong: #a89a86;
+
+/* BUTTONS */
+
+--color-button-primary-bg: #183a63;
+
+--color-button-primary-hover: #102c4d;
+
+--color-button-primary-text: #ffffff;
+
+--color-button-secondary-bg: #e87a23;
+
+--color-button-secondary-hover: #d86812;
+
+--color-button-secondary-text: #ffffff;
+
+/* FOOTER */
+
+--color-footer-bg: #13293f;
+
+--color-footer-heading: #ffffff;
+
+--color-footer-text: #d8dee6;
+
+--color-footer-hover: #e87a23;
+
+/* CARD */
+
+--color-card-bg: #ffffff;
+
+--color-card-bg-hover: #fbf9f6;
+
+--color-card-border: #e4ddd5;
+
+--color-card-shadow: rgba(0, 0, 0, 0.06);
+
+/* INPUT */
+
+--color-input-bg: #ffffff;
+
+--color-input-border: #d7cec2;
+
+--color-input-focus: #183a63;
+
+--color-input-placeholder: #8e98a5;
+
+/* STATUS */
+
+--color-success: #228b5a;
+
+--color-warning: #c98500;
+
+--color-error: #d64045;
+
+/* HERO */
+
+--color-hero-overlay: rgba(19, 41, 63, 0.58);
+
+--color-overlay: rgba(19, 41, 63, 0.48);
+
+/* SHADOWS */
+
+--shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.03);
+
+--shadow-md: 0 10px 25px rgba(0, 0, 0, 0.06);
+
+--shadow-lg: 0 18px 45px rgba(0, 0, 0, 0.08);
+
+--shadow-xl: 0 30px 60px rgba(0, 0, 0, 0.12);

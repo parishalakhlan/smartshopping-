@@ -2,128 +2,157 @@
 
 @theme {
   /* ==========================================================
-     BRAND COLORS
+     BRAND
   ========================================================== */
 
-  --color-primary: #0f2238;
-  --color-primary-hover: #183352;
+  --color-primary: #123d6a;
+  --color-primary-hover: #0f3155;
 
-  --color-accent: #b58232;
-  --color-accent-hover: #966a26;
+  --color-accent: #f47c20;
+  --color-accent-hover: #dd6811;
 
   /* ==========================================================
-     BACKGROUNDS & SURFACES
+     BACKGROUND
   ========================================================== */
 
-  --color-background-main: #fcfbf9;
-  --color-background-secondary: #f4efea;
-  --color-background-tertiary: #e9e2d8;
+  --color-background-main: #ffffff;
+
+  --color-background-secondary: #f5f8fc;
+
+  --color-background-tertiary: #edf3f9;
 
   --color-surface: #ffffff;
-  --color-surface-hover: #f8f5f0;
+
+  --color-surface-hover: #f7fafc;
 
   /* ==========================================================
      TEXT
   ========================================================== */
 
-  --color-text-primary: #0d151c;
-  --color-text-secondary: #3a4b5c;
-  --color-text-muted: #627282;
+  --color-text-primary: #10243d;
+
+  --color-text-secondary: #344b63;
+
+  --color-text-muted: #61758d;
+
   --color-text-inverse: #ffffff;
 
   /* ==========================================================
-     BORDERS
+     BORDER
   ========================================================== */
 
-  --color-border-main: #d9cfc2;
-  --color-border-hover: #b8aa97;
-  --color-border-strong: #877763;
+  --color-border-main: #d7e1ea;
 
-  /* ==========================================================
-     STATUS
-  ========================================================== */
+  --color-border-hover: #b8c9d8;
 
-  --color-success: #15803d;
-  --color-warning: #d97706;
-  --color-error: #b91c1c;
+  --color-border-strong: #8ea4b8;
 
   /* ==========================================================
      BUTTONS
   ========================================================== */
 
-  --color-button-primary-bg: var(--color-primary);
-  --color-button-primary-hover: var(--color-primary-hover);
+  --color-button-primary-bg: #123d6a;
+
+  --color-button-primary-hover: #0f3155;
+
   --color-button-primary-text: #ffffff;
 
-  --color-button-secondary-bg: var(--color-accent);
-  --color-button-secondary-hover: var(--color-accent-hover);
+  --color-button-secondary-bg: #f47c20;
+
+  --color-button-secondary-hover: #dd6811;
+
   --color-button-secondary-text: #ffffff;
 
   /* ==========================================================
      NAVBAR
   ========================================================== */
 
-  --color-navbar-bg: #fcfbf9;
-  --color-navbar-text: var(--color-text-primary);
-  --color-navbar-hover: var(--color-accent);
-  --color-navbar-active: var(--color-primary);
+  --color-navbar-bg: #ffffff;
+
+  --color-navbar-text: #10243d;
+
+  --color-navbar-hover: #f47c20;
+
+  --color-navbar-active: #123d6a;
 
   /* ==========================================================
      FOOTER
   ========================================================== */
 
-  --color-footer-bg: #091524;
+  --color-footer-bg: #0d2744;
+
   --color-footer-heading: #ffffff;
-  --color-footer-text: #cbd5e1;
-  --color-footer-hover: var(--color-accent);
+
+  --color-footer-text: #d8e3ef;
+
+  --color-footer-hover: #f47c20;
 
   /* ==========================================================
      CARDS
   ========================================================== */
 
   --color-card-bg: #ffffff;
-  --color-card-bg-hover: #f8f5f0;
-  --color-card-border: #d9cfc2;
-  --color-card-shadow: rgba(13, 21, 28, 0.06);
+
+  --color-card-bg-hover: #f7fafd;
+
+  --color-card-border: #d7e1ea;
+
+  --color-card-shadow: rgba(17, 37, 61, 0.08);
 
   /* ==========================================================
-     INPUTS
+     INPUT
   ========================================================== */
 
   --color-input-bg: #ffffff;
-  --color-input-border: #c4b6a5;
-  --color-input-focus: var(--color-primary);
-  --color-input-placeholder: #7c8ba0;
+
+  --color-input-border: #c7d6e3;
+
+  --color-input-focus: #123d6a;
+
+  --color-input-placeholder: #73879c;
+
+  /* ==========================================================
+     STATUS
+  ========================================================== */
+
+  --color-success: #198754;
+
+  --color-warning: #d97706;
+
+  --color-error: #dc3545;
 
   /* ==========================================================
      HERO
   ========================================================== */
 
-  --color-hero-overlay: rgba(15, 34, 56, 0.65);
+  --color-hero-overlay: rgba(18, 61, 106, 0.68);
 
-  /* ==========================================================
-     OVERLAY
-  ========================================================== */
-
-  --color-overlay: rgba(9, 21, 36, 0.65);
+  --color-overlay: rgba(16, 36, 61, 0.6);
 
   /* ==========================================================
      SHADOWS
   ========================================================== */
 
-  --shadow-sm: 0 1px 3px rgba(13, 21, 28, 0.06);
-  --shadow-md: 0 4px 14px rgba(13, 21, 28, 0.08);
-  --shadow-lg: 0 10px 28px rgba(13, 21, 28, 0.12);
-  --shadow-xl: 0 20px 48px rgba(13, 21, 28, 0.18);
+  --shadow-sm: 0 1px 3px rgba(17, 37, 61, 0.06);
+
+  --shadow-md: 0 6px 18px rgba(17, 37, 61, 0.1);
+
+  --shadow-lg: 0 12px 32px rgba(17, 37, 61, 0.14);
+
+  --shadow-xl: 0 22px 48px rgba(17, 37, 61, 0.18);
 
   /* ==========================================================
      RADIUS
   ========================================================== */
 
   --radius-sm: 8px;
+
   --radius-md: 12px;
+
   --radius-lg: 18px;
+
   --radius-xl: 24px;
+
   --radius-full: 9999px;
 }
 
@@ -160,7 +189,7 @@
     content: "";
     position: absolute;
     inset: -4px;
-    border: 1px solid var(--color-accent);
+    border: 2px solid var(--color-accent);
     border-radius: inherit;
     pointer-events: none;
   }
