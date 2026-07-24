@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@theme {
+  /* ==========================================================
+     BRAND COLORS (High Contrast & High Legibility)
+  ========================================================== */
+
+  --color-primary: #0a141e;
+  --color-primary-hover: #162838;
+
+  --color-accent: #b87d0e;
+  --color-accent-hover: #916005;
+
+  /* ==========================================================
+     BACKGROUNDS & SURFACES (Clean Whites & Strong Off-Whites)
+  ========================================================== */
+
+  --color-background-main: #ffffff;
+  --color-background-secondary: #f4f4f0;
+  --color-background-tertiary: #e5e5df;
+
+  --color-surface: #ffffff;
+  --color-surface-hover: #f8f8f6;
+
+  /* ==========================================================
+     TEXT (Maximum Contrast - Passes AAA Standards)
+  ========================================================== */
+
+  --color-text-primary: #0a0a0a;
+  --color-text-secondary: #2c353f;
+  --color-text-muted: #4a5562;
+  --color-text-inverse: #ffffff;
+
+  /* ==========================================================
+     BORDERS (High Visual Separation)
+  ========================================================== */
+
+  --color-border-main: #d0c9bf;
+  --color-border-hover: #9e9484;
+  --color-border-strong: #524b40;
+
+  /* ==========================================================
+     STATUS
+  ========================================================== */
+
+  --color-success: #146c2e;
+  --color-warning: #b45309;
+  --color-error: #b91c1c;
+
+  /* ==========================================================
+     BUTTONS
+  ========================================================== */
+
+  --color-button-primary-bg: var(--color-primary);
+  --color-button-primary-hover: var(--color-primary-hover);
+  --color-button-primary-text: #ffffff;
+
+  --color-button-secondary-bg: var(--color-accent);
+  --color-button-secondary-hover: var(--color-accent-hover);
+  --color-button-secondary-text: #ffffff;
+
+  /* ==========================================================
+     NAVBAR
+  ========================================================== */
+
+  --color-navbar-bg: #ffffff;
+  --color-navbar-text: var(--color-text-primary);
+  --color-navbar-hover: var(--color-accent);
+  --color-navbar-active: var(--color-primary);
+
+  /* ==========================================================
+     FOOTER
+  ========================================================== */
+
+  --color-footer-bg: #050b10;
+  --color-footer-heading: #ffffff;
+  --color-footer-text: #e2e8f0;
+  --color-footer-hover: #f59e0b;
+
+  /* ==========================================================
+     CARDS
+  ========================================================== */
+
+  --color-card-bg: #ffffff;
+  --color-card-bg-hover: #f8f8f6;
+  --color-card-border: #d0c9bf;
+  --color-card-shadow: rgba(0, 0, 0, 0.12);
+
+  /* ==========================================================
+     INPUTS
+  ========================================================== */
+
+  --color-input-bg: #ffffff;
+  --color-input-border: #80776b;
+  --color-input-focus: var(--color-primary);
+  --color-input-placeholder: #525e6f;
+
+  /* ==========================================================
+     HERO
+  ========================================================== */
+
+  --color-hero-overlay: rgba(10, 20, 30, 0.78);
+
+  /* ==========================================================
+     OVERLAY
+  ========================================================== */
+
+  --color-overlay: rgba(5, 11, 16, 0.75);
+
+  /* ==========================================================
+     SHADOWS
+  ========================================================== */
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 10px 28px rgba(0, 0, 0, 0.16);
+  --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.22);
+
+  /* ==========================================================
+     RADIUS
+  ========================================================== */
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+}
+
+/* ==========================================================
+   PREMIUM TYPOGRAPHY UTILITIES
+========================================================== */
+
+@utility font-luxury-heading {
+  font-family: var(--font-serif, serif);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+@utility font-luxury-nav {
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+@utility font-luxury-meta {
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@utility focus-luxury {
+  outline: none;
+  position: relative;
+
+  &:focus-visible::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border: 2px solid var(--color-accent);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+}
