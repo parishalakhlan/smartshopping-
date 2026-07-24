@@ -32,6 +32,7 @@ export function AboutHeroDesktop() {
           alt="High fashion fabrics architectural display"
           fill
           priority
+          loading="eager"
           sizes="100vw"
           className="object-cover object-center"
         />
