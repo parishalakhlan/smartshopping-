@@ -197,6 +197,33 @@ export const MobileMenu = memo(function MobileMenu() {
                       </motion.div>
                     );
                   })}
+
+                  {/* ABOUT LINK - NOW A NORMAL LINK */}
+                  <motion.div
+                    variants={linkVariants}
+                    className="relative flex items-center group"
+                  >
+                    {pathname.startsWith("/about") && (
+                      <span className="absolute -left-3 w-1 h-4 bg-accent" />
+                    )}
+                    <motion.div
+                      whileTap={{ scale: 1.01 }}
+                      transition={TEXT_SPRING}
+                    >
+                      <Link
+                        href="/about"
+                        onClick={() => setIsOpen(false)}
+                        className={`font-sans font-extrabold text-lg sm:text-xl tracking-wide relative py-0.5 inline-block transition-all duration-300 group-hover:translate-x-1 ${
+                          pathname.startsWith("/about")
+                            ? "text-accent"
+                            : "text-text-primary hover:text-accent"
+                        }`}
+                      >
+                        About
+                        <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-accent transition-all duration-300 group-hover:w-full" />
+                      </Link>
+                    </motion.div>
+                  </motion.div>
                 </motion.nav>
 
                 {/* HIGH-CONTRAST MOBILE METRICS BAR */}
