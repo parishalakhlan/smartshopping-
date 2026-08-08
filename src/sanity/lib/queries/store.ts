@@ -6,7 +6,7 @@ export const STORE_LOCATOR_QUERY = groq`
  
 
   stores[]{
-    id,
+    _key,
     name,
    
     address,

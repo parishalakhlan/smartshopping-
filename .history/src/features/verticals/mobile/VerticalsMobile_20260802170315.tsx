@@ -1,0 +1,433 @@
+"use client";
+
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { verticalsConfig } from "@/features/verticals/verticals.data";
+
+import { ChevronLeft, ChevronRight, Sparkles, Layers } from "lucide-react";
+export default function VerticalsMobile() {
+  return (
+    <div className=" font-sans antialiased overflow-x-hidden">
+      <VerticalsHeroMobile />
+      <UniverseOrbit />
+      <VerticalRevealStrips />
+      <CapabilityWheelMobile />
+
+      <FAQRevealMobile />
+      <ClosingCTAMobile />
+    </div>
+  );
+}
+
+// MOBILE HERO
+
+export function VerticalsHeroMobile() {
+  const { hero } = verticalsConfig;
+
+  return (
+    <section className="relative min-h-[75vh] w-full max-w-full box-border flex flex-col justify-end px-6 lg:px-8 pb-10 pt-10 bg-primary overflow-hidden border-b border-border-strong">
+      {/* Immersive Photography Backing Layer */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src={hero.image.src}
+          alt={hero.image.alt}
+          fill
+          priority
+          className={`object-cover opacity-30 scale-105 ${
+            hero.image.objectFit || "object-center"
+          }`}
+          sizes="100vw"
+        />
+
+        {/* High-Contrast Gradient Backdrop Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-primary/40" />
+      </div>
+
+      {/* Foreground Content Stack */}
+      <div className="relative z-10 space-y-6 max-w-3xl w-full box-border">
+        {/* Minimal Kicker Tagline */}
+        <span className="text-xs uppercase tracking-[0.3em] text-accent font-bold block">
+          {hero.tagline}
+        </span>
+
+        {/* High-Contrast Bold Serif Typography Statement */}
+        <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-text-inverse leading-[1.05]">
+          {hero.headingLines.map((line, index) => (
+            <span key={index}>
+              {line}
+              {index < hero.headingLines.length - 1 && <br />}
+            </span>
+          ))}{" "}
+          <span className="font-serif italic font-normal text-accent">
+            {hero.italicText}
+          </span>
+          .
+        </h1>
+
+        {/* Medium Weight Body Copy for High Legibility */}
+        <p className="text-text-inverse/80 text-base font-medium max-w-xl leading-relaxed">
+          {hero.description}
+        </p>
+      </div>
+    </section>
+  );
+}
+// BUSINESS UNIVERSE (INTERACTIVE STRIP SELECTION TO MIMIC ROTATION FLOW)
+
+export function UniverseOrbit() {
+  const { universeNodes, metadata } = verticalsConfig;
+  const [activeSeg, setActiveSeg] = useState(0);
+  const [direction, setDirection] = useState(1);
+
+  if (!universeNodes || universeNodes.length === 0) return null;
+
+  const total = universeNodes.length;
+  const activeData = universeNodes[activeSeg];
+
+  const handleNext = () => {
+    setDirection(1);
+    setActiveSeg((prev) => (prev + 1) % total);
+  };
+
+  const handlePrev = () => {
+    setDirection(-1);
+    setActiveSeg((prev) => (prev - 1 + total) % total);
+  };
+
+  return (
+    <section
+      id="universe-mobile"
+      className="py-10 sm:py-16 px-4 sm:px-6 bg-background-main border-b-2 border-border-main space-y-6 w-full max-w-full box-border overflow-hidden font-sans"
+    >
+      {/* Header Block & Navigation Controls */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between gap-2">
+          <div className="space-y-1">
+            <span className="text-[10px] sm:text-xs uppercase tracking-[0.25em] text-accent block font-extrabold">
+              {metadata?.sectionTitles?.universe || "Business Universe"}
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-serif font-extrabold text-text-primary tracking-tight">
+              Unified Clusters
+            </h2>
+          </div>
+
+          {/* Step Indicator Counter */}
+          <div className="flex items-center gap-1.5 px-3 py-1 bg-card-bg border-2 border-border-main text-[11px] font-mono font-bold text-text-primary shadow-xs shrink-0">
+            <span className="text-accent">
+              {String(activeSeg + 1).padStart(2, "0")}
+            </span>
+            <span className="text-text-secondary/60">/</span>
+            <span>{String(total).padStart(2, "0")}</span>
+          </div>
+        </div>
+
+        {/* Interactive Segment Progress Bar & Arrow Controls */}
+        <div className="flex items-center justify-between gap-3 pt-1">
+          {/* Visual Step Progress Dots */}
+          <div className="flex-1 flex items-center gap-1.5">
+            {universeNodes.map((node, idx) => (
+              <button
+                key={node.id || idx}
+                onClick={() => {
+                  setDirection(idx > activeSeg ? 1 : -1);
+                  setActiveSeg(idx);
+                }}
+                className={`h-2 transition-all duration-300 ${
+                  activeSeg === idx
+                    ? "flex-2 bg-accent"
+                    : "flex-1 bg-border-main/50 hover:bg-text-secondary/40"
+                }`}
+                aria-label={`Jump to cluster ${node.title}`}
+              />
+            ))}
+          </div>
+
+          {/* Next / Prev Cycle Buttons */}
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={handlePrev}
+              className="p-2.5 bg-card-bg border-2 border-border-main text-text-primary hover:border-accent hover:text-accent active:scale-95 transition-all shadow-xs"
+              aria-label="Previous cluster"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+
+            <button
+              onClick={handleNext}
+              className="p-2.5 bg-card-bg border-2 border-border-main text-text-primary hover:border-accent hover:text-accent active:scale-95 transition-all shadow-xs"
+              aria-label="Next cluster"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Animated Active Cluster Card */}
+      <div className="relative w-full box-border">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={activeSeg}
+            initial={{ opacity: 0, x: direction * 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: direction * -30 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="bg-card-bg p-5 sm:p-6 border-2 border-border-main space-y-5 shadow-sm w-full box-border"
+          >
+            {/* Cluster Title Header */}
+            <div className="flex items-start justify-between gap-3 border-b-2 border-border-main/40 pb-3">
+              <div className="space-y-1">
+                <span className="text-[9px] uppercase tracking-[0.2em] font-extrabold text-accent block">
+                  Active Focus
+                </span>
+                <h3 className="text-xl font-serif font-bold text-text-primary tracking-tight">
+                  {activeData.title}
+                </h3>
+              </div>
+              <Layers className="w-5 h-5 text-accent shrink-0 mt-1" />
+            </div>
+
+            {/* Overview */}
+            <p className="text-xs sm:text-sm text-text-primary font-medium leading-relaxed">
+              {activeData.overview}
+            </p>
+
+            {/* Metrics & Impact */}
+
+            {/* Tap-to-Cycle Action Prompt */}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </section>
+  );
+}
+// VERTICAL REVEAL (SLIM EDITORIAL STRIPS ACCORDION-FOLD)
+function VerticalRevealStrips() {
+  const { editorialPillars, metadata } = verticalsConfig;
+  const [expandedStrip, setExpandedStrip] = useState<string | null>(
+    editorialPillars[0]?.id || null,
+  );
+
+  return (
+    <section className="py-24 px-6 bg-background-secondary border-b border-border-main space-y-8">
+      <div className="space-y-3">
+        <span className="text-[11px] uppercase tracking-[0.3em] text-accent block font-medium">
+          {metadata.sectionTitles.pillars}
+        </span>
+        <h2 className="text-3xl font-light text-text-primary tracking-tight font-luxury-heading">
+          Ecosystem Pillars
+        </h2>
+      </div>
+
+      <div className="space-y-3">
+        {editorialPillars.map((pillar) => {
+          const isOpen = expandedStrip === pillar.id;
+          return (
+            <div
+              key={pillar.id}
+              onClick={() => setExpandedStrip(isOpen ? null : pillar.id)}
+              className={`border transition-all duration-500 p-5 bg-card-bg ${
+                isOpen ? "border-accent" : "border-card-border"
+              }`}
+            >
+              <div className="flex justify-between items-center">
+                <h3 className="text-sm uppercase tracking-wider text-text-primary font-light">
+                  {pillar.title}
+                </h3>
+                <span
+                  className={`text-accent text-base transition-all duration-500 ${
+                    isOpen ? "rotate-90" : ""
+                  }`}
+                >
+                  ➔
+                </span>
+              </div>
+
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
+                    className="overflow-hidden pt-5 mt-5 border-t border-border-main space-y-5"
+                  >
+                    <div>
+                      <span className="text-[9px] uppercase text-text-muted tracking-[0.15em] block font-medium">
+                        Mission Objective
+                      </span>
+                      <p className="text-sm text-text-secondary font-light mt-1 leading-relaxed">
+                        {pillar.mission}
+                      </p>
+                    </div>
+
+                    <div>
+                      <span className="text-[9px] uppercase text-text-muted tracking-[0.15em] block font-medium">
+                        Vector Operations
+                      </span>
+                      <ul className="space-y-2 mt-2">
+                        {pillar.operations.slice(0, 2).map((op, idx) => (
+                          <li
+                            key={idx}
+                            className="text-sm text-text-muted flex items-center gap-2"
+                          >
+                            <span className="w-1.5 h-1.5 bg-accent rounded-full" />{" "}
+                            {op}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="p-4 bg-background-secondary border border-border-main text-sm text-text-secondary italic font-light">
+                      Metric Target: {pillar.achievements[0] || ""}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+// CAPABILITY WHEEL MOBILE REVEAL SELECTOR
+function CapabilityWheelMobile() {
+  const { capabilityItems, metadata } = verticalsConfig;
+  const [activeCap, setActiveCap] = useState(0);
+  const currentCap = capabilityItems[activeCap];
+
+  return (
+    <section className="py-24 px-6 bg-background-main border-b border-border-main space-y-8">
+      <div className="space-y-3">
+        <span className="text-[11px] uppercase tracking-[0.3em] text-accent block font-medium">
+          {metadata.sectionTitles.capabilities}
+        </span>
+        <h2 className="text-3xl font-light text-text-primary tracking-tight font-luxury-heading">
+          Capabilities Wheel
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2">
+        {capabilityItems.map((cap, index) => (
+          <button
+            key={cap.id}
+            onClick={() => setActiveCap(index)}
+            className={`p-4 text-left border text-xs uppercase tracking-wider transition-all duration-300 ${
+              activeCap === index
+                ? "border-accent bg-background-main text-text-primary"
+                : "border-border-main text-text-muted hover:border-border-hover"
+            }`}
+          >
+            {cap.title.split(" ")[0]}
+          </button>
+        ))}
+      </div>
+
+      <div className="bg-card-bg border border-card-border p-6 min-h-[180px] flex flex-col justify-between shadow-sm">
+        <div className="space-y-3">
+          <span className="text-[9px] uppercase text-text-muted tracking-[0.15em] block font-medium">
+            Operational Yield Capacity
+          </span>
+          <h4 className="text-base text-text-primary font-light">
+            {currentCap.title}
+          </h4>
+          <p className="text-sm text-text-secondary font-light leading-relaxed">
+            {currentCap.description}
+          </p>
+        </div>
+        <div className="text-sm text-accent font-light border-t border-border-main pt-4 mt-3">
+          Yield Matrix: {currentCap.outcome}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// FAQ MOBILE CHIPS ARCHITECTURE
+function FAQRevealMobile() {
+  const { faqs, metadata } = verticalsConfig;
+  const [expandedFaq, setExpandedFaq] = useState<string | null>(null);
+
+  return (
+    <section className="py-24 px-6 bg-background-secondary border-b border-border-main space-y-8">
+      <div className="space-y-3">
+        <span className="text-[11px] uppercase tracking-[0.3em] text-accent block font-medium">
+          {metadata.sectionTitles.faq}
+        </span>
+        <h2 className="text-3xl font-light text-text-primary tracking-tight font-luxury-heading">
+          Ecosystem Intelligence
+        </h2>
+      </div>
+
+      <div className="space-y-3">
+        {faqs.map((f) => {
+          const isOpen = expandedFaq === f.id;
+          return (
+            <div
+              key={f.id}
+              onClick={() => setExpandedFaq(isOpen ? null : f.id)}
+              className="bg-card-bg border border-card-border p-5 text-left transition-all duration-300 hover:border-border-hover"
+            >
+              <div className="flex justify-between items-center gap-3">
+                <span className="text-sm text-text-primary font-light tracking-wide">
+                  {f.question}
+                </span>
+                <span
+                  className={`text-text-muted text-lg font-light transition-all duration-500 ${
+                    isOpen ? "rotate-45 text-accent" : ""
+                  }`}
+                >
+                  ＋
+                </span>
+              </div>
+              {isOpen && (
+                <div className="text-sm text-text-secondary font-light leading-relaxed pt-4 mt-4 border-t border-border-main">
+                  {f.answer}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+// CLOSING CALL TO ACTION
+function ClosingCTAMobile() {
+  const { closingCTA } = verticalsConfig;
+
+  return (
+    <section className="py-32 px-6 bg-background-main text-center space-y-8">
+      <h2 className="text-3xl font-light text-text-primary tracking-tight leading-snug font-luxury-heading">
+        {closingCTA.headingLines.map((line, index) => (
+          <span key={index}>
+            {line}
+            {index < closingCTA.headingLines.length - 1 && <br />}
+          </span>
+        ))}
+      </h2>
+      <p className="text-[10px] text-text-muted uppercase tracking-[0.2em] font-medium">
+        Rigorous Structural Evaluation Channels Apply.
+      </p>
+
+      <div className="flex flex-col gap-3 pt-4 max-w-xs mx-auto">
+        <a
+          href={closingCTA.ctaPrimary.href}
+          className="w-full bg-button-primary-bg text-button-primary-text text-xs font-medium uppercase tracking-[0.2em] py-4 text-center block transition-all duration-300 hover:shadow-lg active:scale-[0.97]"
+        >
+          {closingCTA.ctaPrimary.label}
+        </a>
+        <a
+          href={closingCTA.ctaSecondary.href}
+          className="w-full bg-transparent text-text-primary border border-border-main text-xs font-medium uppercase tracking-[0.2em] py-4 text-center block transition-all duration-300 hover:border-text-primary hover:bg-background-secondary"
+        >
+          {closingCTA.ctaSecondary.label}
+        </a>
+      </div>
+    </section>
+  );
+}

@@ -21,8 +21,46 @@ interface MobileStoreLocatorProps {
   };
 }
 
+// Normalize state names by trimming spaces and standardizing format
+const normalizeState = (state: string): string => {
+  if (!state) return "Unknown";
+
+  // Trim leading/trailing spaces
+  const normalized = state.trim();
+
+  // Handle two-letter state codes (convert to uppercase)
+  if (normalized.length === 2) {
+    return normalized.toUpperCase();
+  }
+
+  // Handle full state names - convert to proper case
+  return normalized
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
 export function MobileStoreLocator({ data }: MobileStoreLocatorProps) {
-  const { stores } = data;
+  const { stores: rawStores } = data;
+
+  // Normalize all store states and deduplicate
+  const stores = useMemo(() => {
+    // First, normalize all state names
+    const normalizedStores = rawStores.map((store) => ({
+      ...store,
+      state: normalizeState(store.state || "Unknown"),
+    }));
+
+    // Sanity assigns every array item a stable `_key`, so authors do not need
+    // to maintain a separate store ID.
+    const uniqueStores = Array.from(
+      new Map(normalizedStores.map((store) => [store._key, store])).values(),
+    );
+
+    return uniqueStores;
+  }, [rawStores]);
+
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [expandedState, setExpandedState] = useState<string | null>(null);
   const [expandedStoreId, setExpandedStoreId] = useState<
@@ -31,7 +69,7 @@ export function MobileStoreLocator({ data }: MobileStoreLocatorProps) {
 
   const regionRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  // 1. Group Stores by State/Region dynamically
+  // 1. Group Stores by State/Region dynamically with normalized states
   const groupedStores = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
 
@@ -40,7 +78,7 @@ export function MobileStoreLocator({ data }: MobileStoreLocatorProps) {
       return (
         store.name.toLowerCase().includes(query) ||
         store.city.toLowerCase().includes(query) ||
-        store.address.toLowerCase().includes(query) ||
+        store.address?.toLowerCase().includes(query) ||
         store.state.toLowerCase().includes(query)
       );
     });
@@ -120,11 +158,11 @@ export function MobileStoreLocator({ data }: MobileStoreLocatorProps) {
         </div>
 
         {/* HORIZONTAL JUMP BAR (FAST STATE ACCESS) */}
-        {!searchQuery && (
+        {!searchQuery && availableStates.length > 0 && (
           <div className="w-full overflow-hidden">
             <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none snap-x w-full">
               {availableStates.map((state) => {
-                const count = groupedStores[state].length;
+                const count = groupedStores[state]?.length || 0;
                 const isExpanded = expandedState === state;
                 return (
                   <button
@@ -151,7 +189,7 @@ export function MobileStoreLocator({ data }: MobileStoreLocatorProps) {
           <div className="py-20 text-center space-y-3 px-4">
             <MapPin className="w-8 h-8 text-text-secondary/40 mx-auto" />
             <p className="text-xs font-medium text-text-secondary break-words">
-              No showrooms match "{searchQuery}"
+              No showrooms match {searchQuery}
             </p>
             <button
               onClick={() => setSearchQuery("")}
@@ -162,7 +200,7 @@ export function MobileStoreLocator({ data }: MobileStoreLocatorProps) {
           </div>
         ) : (
           availableStates.map((stateName) => {
-            const stateStores = groupedStores[stateName];
+            const stateStores = groupedStores[stateName] || [];
             const isStateExpanded =
               Boolean(searchQuery) || expandedState === stateName;
 
@@ -207,7 +245,7 @@ export function MobileStoreLocator({ data }: MobileStoreLocatorProps) {
 
                 {/* SHOWROOM LIST FOR STATE */}
                 <AnimatePresence initial={false}>
-                  {isStateExpanded && (
+                  {isStateExpanded && stateStores.length > 0 && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
@@ -216,11 +254,11 @@ export function MobileStoreLocator({ data }: MobileStoreLocatorProps) {
                       className="divide-y divide-border-main/30 w-full"
                     >
                       {stateStores.map((store) => {
-                        const isStoreExpanded = expandedStoreId === store.id;
+                        const isStoreExpanded = expandedStoreId === store._key;
 
                         return (
                           <div
-                            key={store.id}
+                            key={store._key}
                             className="bg-background-main transition-colors w-full box-border"
                           >
                             {/* COMPACT SHOWROOM ROW */}
@@ -228,7 +266,7 @@ export function MobileStoreLocator({ data }: MobileStoreLocatorProps) {
                               <div
                                 onClick={() =>
                                   setExpandedStoreId((prev) =>
-                                    prev === store.id ? null : store.id,
+                                    prev === store._key ? null : store._key,
                                   )
                                 }
                                 className="flex-1 min-w-0 cursor-pointer space-y-0.5 pr-1"
@@ -271,7 +309,7 @@ export function MobileStoreLocator({ data }: MobileStoreLocatorProps) {
                                 <button
                                   onClick={() =>
                                     setExpandedStoreId((prev) =>
-                                      prev === store.id ? null : store.id,
+                                      prev === store._key ? null : store._key,
                                     )
                                   }
                                   className="p-1 text-text-secondary"
@@ -314,6 +352,16 @@ export function MobileStoreLocator({ data }: MobileStoreLocatorProps) {
                                     <p className="leading-relaxed">
                                       {store.address}
                                     </p>
+                                    {store.hours && (
+                                      <>
+                                        <p className="font-semibold text-text-primary mt-2">
+                                          Hours:
+                                        </p>
+                                        <p className="leading-relaxed">
+                                          {store.hours}
+                                        </p>
+                                      </>
+                                    )}
                                   </div>
                                 </motion.div>
                               )}

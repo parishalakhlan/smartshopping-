@@ -1,61 +1,123 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
-import { Phone, Compass, Clock, MapPin } from "lucide-react";
+import { Phone, Compass, MapPin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Store, StateFootprint } from "@/features/stores/data/stores";
 
 interface DesktopStoreLocatorProps {
   data: {
     stores: Store[];
-    regionalFootprints?: StateFootprint[]; // Make it optional
+    regionalFootprints?: StateFootprint[];
   };
 }
 
+// Normalize state names by trimming spaces and standardizing format
+const normalizeState = (state: string): string => {
+  if (!state) return "Unknown";
+
+  // Trim leading/trailing spaces
+  const normalized = state.trim();
+
+  // Handle two-letter state codes (convert to uppercase)
+  if (normalized.length === 2) {
+    return normalized.toUpperCase();
+  }
+
+  // Handle full state names - convert to proper case
+  return normalized
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
 export function DesktopStoreLocator({ data }: DesktopStoreLocatorProps) {
-  const { stores, regionalFootprints = [] } = data; // Provide default empty array
+  const { stores: rawStores, regionalFootprints = [] } = data;
+
+  // Normalize all store states and deduplicate
+  const stores = useMemo(() => {
+    // First, normalize all state names
+    const normalizedStores = rawStores.map((store) => ({
+      ...store,
+      state: normalizeState(store.state || "Unknown"),
+    }));
+
+    // Sanity assigns every array item a stable `_key`, so authors do not need
+    // to maintain a separate store ID.
+    const uniqueStores = Array.from(
+      new Map(normalizedStores.map((store) => [store._key, store])).values(),
+    );
+
+    return uniqueStores;
+  }, [rawStores]);
+
   const [selectedState, setSelectedState] = useState<string>("All");
 
-  // Generate regional footprints from stores if not provided
+  // Debug logs to verify the fix
+  useEffect(() => {
+    console.log("✅ After normalization:");
+    console.log("Total stores:", stores.length);
+
+    const stateCounts = stores.reduce(
+      (acc, store) => {
+        acc[store.state] = (acc[store.state] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
+    console.log("State counts (normalized):", stateCounts);
+    console.log("Unique states:", Object.keys(stateCounts).length);
+  }, [stores]);
+
+  // Generate regional footprints from stores
   const computedRegionalFootprints = useMemo(() => {
     if (regionalFootprints.length > 0) {
-      return regionalFootprints;
+      // Normalize provided footprints too
+      return regionalFootprints.map((fp) => ({
+        ...fp,
+        name: normalizeState(fp.name),
+      }));
     }
 
-    // Generate from stores data
+    // Count stores by state (all normalized now)
     const stateMap = new Map<string, number>();
+
     stores.forEach((store: Store) => {
-      const state = store.state;
+      const state = store.state || "Unknown";
       stateMap.set(state, (stateMap.get(state) || 0) + 1);
     });
 
-    return Array.from(stateMap.entries()).map(([name, count], index) => ({
-      id: `region-${index}`,
-      name,
-      count,
-    }));
+    return Array.from(stateMap.entries())
+      .map(([name, count]) => ({
+        id: `region-${name}`,
+        name,
+        count,
+      }))
+      .sort((a, b) => b.count - a.count);
   }, [stores, regionalFootprints]);
 
+  // Filter stores by selected state (using normalized names)
   const filteredStores = useMemo(() => {
     if (selectedState === "All") return stores;
-    return stores.filter(
-      (store: Store) =>
-        store.state.toLowerCase() === selectedState.toLowerCase(),
-    );
+
+    // Normalize the selected state for comparison
+    const normalizedSelected = normalizeState(selectedState);
+    return stores.filter((store: Store) => store.state === normalizedSelected);
   }, [selectedState, stores]);
+
+  // Calculate unique states count
+  const uniqueStates = useMemo(() => {
+    const states = new Set(stores.map((store: Store) => store.state));
+    return states.size;
+  }, [stores]);
 
   // Helper function to format phone number
   const formatPhoneNumber = (phone: string | null | undefined) => {
     if (!phone) return "#";
     return phone.replace(/\s+/g, "");
   };
-
-  // Calculate unique states count for stats
-  const uniqueStates = useMemo(() => {
-    const states = new Set(stores.map((store: Store) => store.state));
-    return states.size;
-  }, [stores]);
 
   return (
     <section
@@ -81,7 +143,7 @@ export function DesktopStoreLocator({ data }: DesktopStoreLocatorProps) {
         <div className="flex gap-8 border-l border-border-main pl-8 py-2">
           <div className="text-left">
             <span className="block text-3xl font-serif text-button-primary-bg font-semibold">
-              {stores.length}+
+              {stores.length}
             </span>
             <span className="text-[9px] uppercase tracking-wider text-text-secondary font-bold">
               Showrooms Live
@@ -89,7 +151,7 @@ export function DesktopStoreLocator({ data }: DesktopStoreLocatorProps) {
           </div>
           <div className="text-left">
             <span className="block text-3xl font-serif text-button-primary-bg font-semibold">
-              {uniqueStates}+
+              {uniqueStates}
             </span>
             <span className="text-[9px] uppercase tracking-wider text-text-secondary font-bold">
               States Covered
@@ -108,7 +170,7 @@ export function DesktopStoreLocator({ data }: DesktopStoreLocatorProps) {
               : "text-button-primary-bg/60 hover:text-button-primary-bg"
           }`}
         >
-          All Locations
+          All Locations ({stores.length})
           {selectedState === "All" && (
             <motion.div
               layoutId="activeUnderline"
@@ -149,12 +211,11 @@ export function DesktopStoreLocator({ data }: DesktopStoreLocatorProps) {
         >
           <AnimatePresence mode="popLayout">
             {filteredStores.map((store: Store, index: number) => {
-              // Create an asymmetrical layout weight by changing grid spans
               const isFeatureCard = index % 4 === 0;
 
               return (
                 <motion.div
-                  key={store.id}
+                  key={store._key}
                   layout
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -165,15 +226,17 @@ export function DesktopStoreLocator({ data }: DesktopStoreLocatorProps) {
                   }`}
                 >
                   {/* Visual Top Area */}
-                  <div className="relative w-full h-[60%] overflow-hidden bg-background-secondary">
-                    <Image
+                  <div className="w-full h-[60%] relative overflow-hidden bg-background-secondary">
+                    <img
                       src={store.image?.src || "/placeholder-image.jpg"}
                       alt={store.image?.alt || store.name}
-                      fill
-                      className={`object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${
-                        store.image?.objectFit || "cover"
-                      }`}
-                      sizes="(max-width: 1200px) 100vw, 40vw"
+                      className="absolute inset-0 w-full h-full object-cover object-center"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        objectPosition: "center",
+                      }}
                     />
                   </div>
 

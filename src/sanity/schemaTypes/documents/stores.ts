@@ -28,11 +28,6 @@ export default defineType({
 
           fields: [
             defineField({
-              name: "id",
-              type: "string",
-            }),
-
-            defineField({
               name: "name",
               type: "string",
             }),
