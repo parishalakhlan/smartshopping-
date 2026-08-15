@@ -76,7 +76,7 @@ export const networkConfig: NetworkConfig = {
   flagshipLabel: "Smart Shopping • Model Town",
   flagshipLabelMobile: "Smart Shopping • Model Town",
   image: {
-    src: "/showrooms/hisar/hisar3.webp",
+    src: "/showrooms/hisar/hisar2.webp",
     alt: "Premium Concept Store Architecture",
     sizes: {
       desktop: "45vw",

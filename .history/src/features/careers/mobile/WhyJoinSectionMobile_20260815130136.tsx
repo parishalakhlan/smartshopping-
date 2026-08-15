@@ -105,7 +105,7 @@ export const WhyJoinSectionMobile: React.FC<WhyJoinSectionMobileProps> = ({
               <button
                 onClick={handlePrev}
                 aria-label="Previous photo"
-                className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 bg-primary/75 text-text-inverse border border-border-strong active:scale-95 transition-all shadow-md rounded-sm z-10"
+                className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 bg-primary/80 text-text-inverse border border-border-strong active:scale-95 transition-all shadow-md rounded-sm"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -113,7 +113,7 @@ export const WhyJoinSectionMobile: React.FC<WhyJoinSectionMobileProps> = ({
               <button
                 onClick={handleNext}
                 aria-label="Next photo"
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-primary/75 text-text-inverse border border-border-strong active:scale-95 transition-all shadow-md rounded-sm z-10"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 bg-primary/80 text-text-inverse border border-border-strong active:scale-95 transition-all shadow-md rounded-sm"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>

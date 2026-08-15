@@ -85,24 +85,14 @@ export const VisitSectionDesktop: React.FC = () => {
                 className="object-cover object-center"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-surface/80 via-transparent to-transparent pointer-events-none" />
 
               {/* Center Map Location Marker */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-10">
-                <span className="relative flex h-3.5 w-3.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-accent border-2 border-card-bg"></span>
-                </span>
-                <div className="bg-card-bg text-text-primary border-2 border-border-main text-[10px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-1 shadow-md mt-2">
-                  {flagshipLocation.mapLabel}
-                </div>
-              </div>
 
               {/* Bottom Callout Banner */}
-              <div className="absolute bottom-4 left-4 right-4 bg-card-bg p-3 border-2 border-border-main text-left flex items-center gap-2.5 shadow-md z-10">
+              <div className="absolute bottom-4 left-4 bg-card-bg p-3 border-2 border-border-main text-left inline-flex items-center gap-2.5 shadow-md z-10">
                 <Info className="w-4 h-4 text-accent shrink-0" />
                 <span className="text-xs text-text-primary font-bold">
-                  Flagship stores open across key regional hubs.
+                  Smart Shopping,Hisar
                 </span>
               </div>
             </div>

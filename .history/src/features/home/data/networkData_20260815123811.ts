@@ -73,10 +73,10 @@ export const networkConfig: NetworkConfig = {
     "Explore our highly considered network of physical spaces spanning regional culture hubs across Punjab, Haryana, and Rajasthan. Each showroom introduces curated international brand standards directly to your local neighborhood.",
   descriptionMobile:
     "Explore our highly considered network of physical spaces spanning regional culture hubs across Punjab, Haryana, and Rajasthan. Each showroom introduces curated international brand standards directly to your local neighborhood.",
-  flagshipLabel: "Flagship Concept • Sector 17",
-  flagshipLabelMobile: "Flagship Concept • Sector 17",
+  flagshipLabel: "Smart Shopping • Model Town",
+  flagshipLabelMobile: "Smart Shopping • Model Town",
   image: {
-    src: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop",
+    src: "/showrooms/hisar/hisar.webp",
     alt: "Premium Concept Store Architecture",
     sizes: {
       desktop: "45vw",
@@ -91,11 +91,7 @@ export const networkConfig: NetworkConfig = {
   highlights: [
     {
       title: "Primary Enclaves",
-      body: "Amritsar, Jalandhar, Ludhiana, Jaipur, Udaipur, and Kota.",
-    },
-    {
-      title: "Environment",
-      body: "Immersive architecture tailored to premium brand experiences.",
+      body: "Hisar, Chandigarh,  Jaipur, and Kota.",
     },
   ],
   cta: {

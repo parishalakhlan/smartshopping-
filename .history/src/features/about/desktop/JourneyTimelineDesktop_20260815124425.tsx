@@ -49,7 +49,15 @@ export function JourneyTimelineDesktop() {
           </motion.div>
 
           {/* Right Block Media Grid Area */}
-          <div className="col-span-6 relative w-full">
+          <div className="col-span-6 relative w-full aspect-[5/4]">
+            {/* Decorative Offset Backdrop Shadow */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, x: 20 }}
+              animate={isInView ? { opacity: 1, scale: 1, x: 0 } : {}}
+              transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1] }}
+              className="absolute inset-0 border-2 border-accent/40 translate-x-4 translate-y-4 pointer-events-none"
+            />
+
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -58,15 +66,14 @@ export function JourneyTimelineDesktop() {
                 delay: 0.1,
                 ease: [0.25, 1, 0.5, 1],
               }}
-              className="relative w-full overflow-hidden border-2 border-border-main bg-card-bg shadow-sm"
+              className="relative w-full h-full overflow-hidden border-2 border-border-main bg-card-bg shadow-sm"
             >
               <Image
                 src={JOURNEY_DATA.displayImage}
                 alt="Smart Shopping spatial interior experience"
-                width={1200}
-                height={960}
+                fill
                 sizes="50vw"
-                className="block w-full h-auto object-contain"
+                className="object-contain object-center"
               />
             </motion.div>
           </div>

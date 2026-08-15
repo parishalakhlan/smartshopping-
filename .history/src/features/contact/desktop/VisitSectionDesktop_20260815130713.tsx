@@ -5,7 +5,6 @@ import Image from "next/image";
 import { MapPin, Compass, Info, ArrowUpRight } from "lucide-react";
 import { flagshipLocation } from "@/features/contact/data/visitData";
 import { MagneticButton } from "@/features/contact/MagneticButton";
-import { FloatingSectionLabel } from "@/features/contact/FloatingSectionLabel";
 
 export const VisitSectionDesktop: React.FC = () => {
   return (
@@ -14,8 +13,6 @@ export const VisitSectionDesktop: React.FC = () => {
       className="py-20 bg-background-main border-b border-border-main hidden lg:block"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <FloatingSectionLabel num="03" text="Visit Us" />
-
         <div className="grid grid-cols-2 gap-12 items-center">
           <div className="space-y-6 text-left">
             <div className="space-y-2">
@@ -63,7 +60,15 @@ export const VisitSectionDesktop: React.FC = () => {
                 rel="noopener noreferrer"
                 className="inline-block"
               >
-                <MagneticButton className="px-6 py-3.5 bg-button-primary-bg text-button-primary-text hover:bg-primary-hover flex items-center gap-2 rounded-none">
+                <MagneticButton
+                  onClick={() => {
+                    window.open(
+                      "https://www.google.com/maps/place/Smart+Shopping/@29.1346621,75.7419293,17z/data=!3m1!4b1!4m6!3m5!1s0x3912336ceb407dff:0xc6e4b64bfaa60d6c!8m2!3d29.1346574!4d75.7445042!16s%2Fg%2F11y2b2k_w2?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+                      "_blank",
+                    );
+                  }}
+                  className="px-6 py-3.5 bg-button-primary-bg text-button-primary-text hover:bg-primary-hover flex items-center gap-2 rounded-none"
+                >
                   Open In Maps{" "}
                   <ArrowUpRight className="w-3.5 h-3.5 text-accent" />
                 </MagneticButton>
@@ -71,29 +76,23 @@ export const VisitSectionDesktop: React.FC = () => {
             </div>
           </div>
 
-          <div className="relative h-[350px] w-full border border-border-main p-2 bg-background-secondary/30">
-            <div className="relative w-full h-full bg-background-secondary overflow-hidden">
+          <div className="relative h-[350px] w-full border-2 border-border-main p-2 bg-surface shadow-sm transition-colors duration-300">
+            <div className="relative w-full h-full overflow-hidden border border-border-main">
               <Image
                 src={flagshipLocation.featureImage}
                 alt="Smart Shopping Interior"
                 fill
-                className="object-cover opacity-40 grayscale"
+                className="object-cover object-center"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 50vw"
               />
-              <div className="absolute inset-0 bg-text-primary/5 mix-blend-multiply" />
+              <div className="absolute inset-0 bg-gradient-to-t from-surface/80 via-transparent to-transparent pointer-events-none" />
 
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-                <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-accent"></span>
-                </span>
-                <div className="bg-text-primary text-white text-[9px] font-mono font-bold uppercase tracking-widest px-2 py-1 shadow-md mt-2">
-                  {flagshipLocation.mapLabel}
-                </div>
-              </div>
+              {/* Center Map Location Marker */}
 
-              <div className="absolute bottom-4 left-4 right-4 bg-background-main p-3 border border-border-main text-left flex items-center gap-2">
-                <Info className="w-3.5 h-3.5 text-accent shrink-0" />
-                <span className="text-[10px] text-text-secondary font-medium">
+              {/* Bottom Callout Banner */}
+              <div className="absolute bottom-4 left-4 right-4 bg-card-bg p-3 border-2 border-border-main text-left flex items-center gap-2.5 shadow-md z-10">
+                <Info className="w-4 h-4 text-accent shrink-0" />
+                <span className="text-xs text-text-primary font-bold">
                   Flagship stores open across key regional hubs.
                 </span>
               </div>
