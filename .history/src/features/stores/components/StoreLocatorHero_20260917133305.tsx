@@ -72,7 +72,7 @@ export function StoreLocatorHero() {
             <div className="pt-8 border-t border-border-strong grid grid-cols-3 gap-4 sm:gap-8 max-w-xl">
               <div>
                 <span className="block text-2xl sm:text-4xl font-bold text-accent font-serif tracking-tight">
-                  35+
+                  31+
                 </span>
                 <span className="text-[10px] sm:text-xs text-text-inverse/80 font-bold uppercase tracking-wider block mt-1">
                   Stores
@@ -90,7 +90,7 @@ export function StoreLocatorHero() {
 
               <div>
                 <span className="block text-2xl sm:text-4xl font-bold text-text-inverse font-serif tracking-tight">
-                  7
+                  6
                 </span>
                 <span className="text-[10px] sm:text-xs text-text-inverse/80 font-bold uppercase tracking-wider block mt-1">
                   States

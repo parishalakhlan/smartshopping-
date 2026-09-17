@@ -19,7 +19,7 @@ export function StoreLocatorHero() {
         />
 
         {/* High-Contrast Dark Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-primary/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/70 to-primary/20" />
 
         {/* Subtle Background Grid Texture */}
         <div
@@ -40,7 +40,7 @@ export function StoreLocatorHero() {
             {/* High-Contrast Badge */}
             <div className="inline-flex items-center gap-2 bg-primary/80 border border-border-strong px-3 py-1.5 rounded-none text-xs font-bold uppercase tracking-widest text-text-inverse backdrop-blur-md">
               <Award className="w-4 h-4 text-accent shrink-0" />
-              <span>8+ Premium Fashion Brands</span>
+              <span>9+ Premium Fashion Brands</span>
             </div>
 
             {/* Main Headline */}
@@ -72,7 +72,7 @@ export function StoreLocatorHero() {
             <div className="pt-8 border-t border-border-strong grid grid-cols-3 gap-4 sm:gap-8 max-w-xl">
               <div>
                 <span className="block text-2xl sm:text-4xl font-bold text-accent font-serif tracking-tight">
-                  35+
+                  31+
                 </span>
                 <span className="text-[10px] sm:text-xs text-text-inverse/80 font-bold uppercase tracking-wider block mt-1">
                   Stores
@@ -90,7 +90,7 @@ export function StoreLocatorHero() {
 
               <div>
                 <span className="block text-2xl sm:text-4xl font-bold text-text-inverse font-serif tracking-tight">
-                  7
+                  6
                 </span>
                 <span className="text-[10px] sm:text-xs text-text-inverse/80 font-bold uppercase tracking-wider block mt-1">
                   States

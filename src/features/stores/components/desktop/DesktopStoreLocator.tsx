@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
-import Image from "next/image";
+
 import { Phone, Compass, MapPin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Store, StateFootprint } from "@/features/stores/data/stores";

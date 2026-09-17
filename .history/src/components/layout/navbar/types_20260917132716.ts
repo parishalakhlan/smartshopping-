@@ -13,23 +13,8 @@ export interface SocialLink {
 export interface NavbarConfig {
   navigation: {
     items: NavigationItem[];
-    aboutSubmenu: NavigationItem[];
   };
-  cta: {
-    label: string;
-    href: string;
-    ariaLabel: string;
-  };
-  connect: {
-    label: string;
-    href: string;
-    ariaLabel: string;
-  };
-  contact: {
-    phone: string;
-    email: string;
-  };
-  socials: SocialLink[];
+
   announcement: {
     text: string;
     ariaLabel: string;
@@ -53,33 +38,11 @@ export const navbarConfig: NavbarConfig = {
       { label: "Careers", href: "/careers" },
       { label: "Contact", href: "/contact" },
     ],
-    aboutSubmenu: [
-      { label: "About Us", href: "/about-us" },
-      { label: "Our Team", href: "/team" },
-      { label: "Careers", href: "/careers" },
-    ],
   },
-  cta: {
-    label: "Find Store Near You",
-    href: "/store-locator",
-    ariaLabel: "Find a store near you",
-  },
-  connect: {
-    label: "Connect With Us",
-    href: "/contact",
-    ariaLabel: "Connect with us",
-  },
-  contact: {
-    phone: "+1 (800) 403-2930",
-    email: "office@fashionfranchise.com",
-  },
-  socials: [
-    { label: "Instagram", href: "https://instagram.com" },
-    { label: "LinkedIn", href: "https://linkedin.com" },
-  ],
+
   announcement: {
-    text: "Premium Fashion • 37+ Stores • 5 States Across North India",
-    ariaLabel: "Announcement: Premium Fashion across 37+ stores in 5 states",
+    text: "Premium Fashion • 31+ Stores • 6 States Across North India",
+    ariaLabel: "Announcement: Premium Fashion across 35+ stores in 7 states",
   },
   metadata: {
     siteName: "Smart Shopping",

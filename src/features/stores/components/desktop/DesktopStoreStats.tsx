@@ -14,7 +14,7 @@ export function DesktopStoreStats() {
           </div>
           <div className="space-y-1">
             <span className="block text-3xl sm:text-4xl font-bold text-primary font-serif tracking-tight leading-none">
-              35+
+              31+
             </span>
             <span className="block text-[10px] font-bold text-accent uppercase tracking-widest">
               Showrooms Live
@@ -68,7 +68,7 @@ export function DesktopStoreStats() {
           </div>
           <div className="space-y-1">
             <span className="block text-3xl sm:text-4xl font-bold text-primary font-serif tracking-tight leading-none">
-              5 States
+              6 States
             </span>
             <span className="block text-[10px] font-bold text-primary uppercase tracking-widest">
               Territories Open

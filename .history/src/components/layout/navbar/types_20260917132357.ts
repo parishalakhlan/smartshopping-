@@ -41,8 +41,8 @@ export const navbarConfig: NavbarConfig = {
   },
 
   announcement: {
-    text: "Premium Fashion • 35+ Stores • 7 States Across North India",
-    ariaLabel: "Announcement: Premium Fashion across 37+ stores in 7 states",
+    text: "Premium Fashion • 31+ Stores • 5 States Across North India",
+    ariaLabel: "Announcement: Premium Fashion across 35+ stores in 7 states",
   },
   metadata: {
     siteName: "Smart Shopping",

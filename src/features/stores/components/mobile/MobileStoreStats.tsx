@@ -3,7 +3,7 @@
 export function MobileStoreStats() {
   const stats = [
     {
-      value: "35+",
+      value: "31+",
       label: "Showrooms Live",
       description: "Curated physical storefronts.",
       iconBg:
@@ -27,7 +27,7 @@ export function MobileStoreStats() {
       accentGlow: "from-purple-500/10 to-transparent",
     },
     {
-      value: "7 States",
+      value: "6 States",
       label: "Territories Open",
       description: "Spanning key luxury markets.",
       iconBg:

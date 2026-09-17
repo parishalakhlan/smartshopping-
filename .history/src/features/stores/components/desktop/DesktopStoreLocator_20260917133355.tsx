@@ -1,26 +1,128 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
-import Image from "next/image";
-import { Phone, Compass, Clock, ArrowRight, MapPin } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { storesConfig } from "@/features/stores/data/stores";
+import React, { useState, useMemo, useEffect } from "react";
 
-export function DesktopStoreLocator() {
-  const { stores, regionalFootprints } = storesConfig;
+import { Phone, Compass, MapPin } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import type { Store, StateFootprint } from "@/features/stores/data/stores";
+
+interface DesktopStoreLocatorProps {
+  data: {
+    stores: Store[];
+    regionalFootprints?: StateFootprint[];
+  };
+}
+
+// Normalize state names by trimming spaces and standardizing format
+const normalizeState = (state: string): string => {
+  if (!state) return "Unknown";
+
+  // Trim leading/trailing spaces
+  const normalized = state.trim();
+
+  // Handle two-letter state codes (convert to uppercase)
+  if (normalized.length === 2) {
+    return normalized.toUpperCase();
+  }
+
+  // Handle full state names - convert to proper case
+  return normalized
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
+export function DesktopStoreLocator({ data }: DesktopStoreLocatorProps) {
+  const { stores: rawStores, regionalFootprints = [] } = data;
+
+  // Normalize all store states and deduplicate
+  const stores = useMemo(() => {
+    // First, normalize all state names
+    const normalizedStores = rawStores.map((store) => ({
+      ...store,
+      state: normalizeState(store.state || "Unknown"),
+    }));
+
+    // Sanity assigns every array item a stable `_key`, so authors do not need
+    // to maintain a separate store ID.
+    const uniqueStores = Array.from(
+      new Map(normalizedStores.map((store) => [store._key, store])).values(),
+    );
+
+    return uniqueStores;
+  }, [rawStores]);
+
   const [selectedState, setSelectedState] = useState<string>("All");
 
+  // Debug logs to verify the fix
+  useEffect(() => {
+    console.log("✅ After normalization:");
+    console.log("Total stores:", stores.length);
+
+    const stateCounts = stores.reduce(
+      (acc, store) => {
+        acc[store.state] = (acc[store.state] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
+    console.log("State counts (normalized):", stateCounts);
+    console.log("Unique states:", Object.keys(stateCounts).length);
+  }, [stores]);
+
+  // Generate regional footprints from stores
+  const computedRegionalFootprints = useMemo(() => {
+    if (regionalFootprints.length > 0) {
+      // Normalize provided footprints too
+      return regionalFootprints.map((fp) => ({
+        ...fp,
+        name: normalizeState(fp.name),
+      }));
+    }
+
+    // Count stores by state (all normalized now)
+    const stateMap = new Map<string, number>();
+
+    stores.forEach((store: Store) => {
+      const state = store.state || "Unknown";
+      stateMap.set(state, (stateMap.get(state) || 0) + 1);
+    });
+
+    return Array.from(stateMap.entries())
+      .map(([name, count]) => ({
+        id: `region-${name}`,
+        name,
+        count,
+      }))
+      .sort((a, b) => b.count - a.count);
+  }, [stores, regionalFootprints]);
+
+  // Filter stores by selected state (using normalized names)
   const filteredStores = useMemo(() => {
     if (selectedState === "All") return stores;
-    return stores.filter(
-      (store) => store.state.toLowerCase() === selectedState.toLowerCase(),
-    );
+
+    // Normalize the selected state for comparison
+    const normalizedSelected = normalizeState(selectedState);
+    return stores.filter((store: Store) => store.state === normalizedSelected);
   }, [selectedState, stores]);
+
+  // Calculate unique states count
+  const uniqueStates = useMemo(() => {
+    const states = new Set(stores.map((store: Store) => store.state));
+    return states.size;
+  }, [stores]);
+
+  // Helper function to format phone number
+  const formatPhoneNumber = (phone: string | null | undefined) => {
+    if (!phone) return "#";
+    return phone.replace(/\s+/g, "");
+  };
 
   return (
     <section
       id="locator-workspace-desktop"
-      className="hidden md:block w-full bg-background-main py-20 lg:py-28 px-6 lg:px-12 max-w-7xl mx-auto font-sans"
+      className="hidden md:block w-full bg-background-main py-20 lg:py-28 px-6 max-w-7xl mx-auto font-sans"
     >
       {/* EDITORIAL HEADER */}
       <div className="border-b border-border-main pb-10 mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
@@ -44,15 +146,15 @@ export function DesktopStoreLocator() {
               {stores.length}
             </span>
             <span className="text-[9px] uppercase tracking-wider text-text-secondary font-bold">
-              Total Spaces
+              Showrooms Live
             </span>
           </div>
           <div className="text-left">
             <span className="block text-3xl font-serif text-button-primary-bg font-semibold">
-              {regionalFootprints.length}
+              {uniqueStates}
             </span>
             <span className="text-[9px] uppercase tracking-wider text-text-secondary font-bold">
-              Regions Covered
+              States Covered
             </span>
           </div>
         </div>
@@ -68,7 +170,7 @@ export function DesktopStoreLocator() {
               : "text-button-primary-bg/60 hover:text-button-primary-bg"
           }`}
         >
-          All Locations
+          All Locations ({stores.length})
           {selectedState === "All" && (
             <motion.div
               layoutId="activeUnderline"
@@ -76,7 +178,7 @@ export function DesktopStoreLocator() {
             />
           )}
         </button>
-        {regionalFootprints.map((region) => {
+        {computedRegionalFootprints.map((region: StateFootprint) => {
           const isSelected =
             selectedState.toLowerCase() === region.name.toLowerCase();
           return (
@@ -108,13 +210,12 @@ export function DesktopStoreLocator() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start"
         >
           <AnimatePresence mode="popLayout">
-            {filteredStores.map((store, index) => {
-              // Create an asymmetrical layout weight by changing grid spans
+            {filteredStores.map((store: Store, index: number) => {
               const isFeatureCard = index % 4 === 0;
 
               return (
                 <motion.div
-                  key={store.id}
+                  key={store._key}
                   layout
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -125,27 +226,18 @@ export function DesktopStoreLocator() {
                   }`}
                 >
                   {/* Visual Top Area */}
-                  <div className="relative w-full h-[60%] overflow-hidden bg-zinc-100">
-                    <Image
-                      src={store.image.src}
-                      alt={store.image.alt}
-                      fill
-                      className={`object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${
-                        store.image.objectFit || "cover"
-                      }`}
-                      sizes="(max-width: 1200px) 100vw, 40vw"
+                  <div className="w-full h-[60%] relative overflow-hidden bg-background-secondary">
+                    <img
+                      src={store.image?.src || "/placeholder-image.jpg"}
+                      alt={store.image?.alt || store.name}
+                      className="absolute inset-0 w-full h-full object-cover object-center"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        objectPosition: "center",
+                      }}
                     />
-                    {/* Glassmorphic Brand Tag */}
-                    <div className="absolute top-4 left-4 bg-background-main/80 backdrop-blur-md px-3 py-1 border border-border-main">
-                      <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-button-primary-bg">
-                        {store.brands.join("  //  ")}
-                      </span>
-                    </div>
-
-                    {/* Status Indicator */}
-                    <div className="absolute top-4 right-4 bg-emerald-500/90 text-white backdrop-blur-md px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest flex items-center gap-1.5 shadow-sm">
-                      <Clock className="w-2.5 h-2.5" /> Open
-                    </div>
                   </div>
 
                   {/* Editorial Content Bottom Area */}
@@ -166,16 +258,26 @@ export function DesktopStoreLocator() {
                     {/* Dynamic Action Panel */}
                     <div className="pt-5 border-t border-border-main/50 flex items-center justify-between">
                       <a
-                        href={`tel:${store.phone}`}
-                        className="text-[10px] font-extrabold text-button-primary-bg/70 hover:text-accent uppercase tracking-widest inline-flex items-center gap-2 transition-colors"
+                        href={
+                          store.phone
+                            ? `tel:${formatPhoneNumber(store.phone)}`
+                            : "#"
+                        }
+                        className={`text-[10px] font-extrabold text-button-primary-bg/70 hover:text-accent uppercase tracking-widest inline-flex items-center gap-2 transition-colors ${
+                          !store.phone ? "opacity-50 pointer-events-none" : ""
+                        }`}
                       >
                         <Phone className="w-3.5 h-3.5" /> Call Store
                       </a>
                       <a
-                        href={store.googleMapsUrl}
+                        href={store.googleMapsUrl || "#"}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-[10px] font-extrabold text-button-primary-text bg-button-primary-bg hover:bg-accent px-4 py-3 uppercase tracking-widest inline-flex items-center gap-2 transition-colors duration-300"
+                        className={`text-[10px] font-extrabold text-button-primary-text bg-button-primary-bg hover:bg-accent px-4 py-3 uppercase tracking-widest inline-flex items-center gap-2 transition-colors duration-300 ${
+                          !store.googleMapsUrl
+                            ? "opacity-50 pointer-events-none"
+                            : ""
+                        }`}
                       >
                         Get Directions
                         <Compass className="w-3.5 h-3.5" />
