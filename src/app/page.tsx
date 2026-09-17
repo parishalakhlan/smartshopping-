@@ -16,7 +16,7 @@ export const metadata = {
 
 export default async function HomePage() {
   const featuredBrands = await client.fetch(FEATURED_BRANDS_QUERY);
-
+  console.log(featuredBrands);
   return (
     <main className="w-full min-h-screen  overflow-x-hidden">
       {/* SECTION 1: IMMERSIVE HERO */}

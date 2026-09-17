@@ -1,0 +1,8 @@
+Smart Shpping 
+Developed a fully dynamic and responsive **Next.js/React.js website** for Smart Shopping, implementing reusable UI components and dynamic product/content rendering. Integrated **Sanity Headless CMS with GROQ** to manage and fetch website content, allowing the client to independently update products and site information without developer involvement. Configured CMS-driven image delivery and structured the application for maintainability and scalable content management.
+
+InternPe
+Developed modern, responsive web applications using React.js and Next.js, focusing on reusable components, dynamic rendering, and scalable UI architecture. Worked with JavaScript, Tailwind CSS, Bootstrap, HTML, and CSS to build responsive interfaces and integrate frontend applications with APIs and CMS-driven data.
+
+EdiGlobe
+Worked as a Frontend Development Intern, building responsive and interactive web interfaces using React.js, JavaScript, HTML, CSS, Tailwind CSS, and Bootstrap. Developed reusable UI components, integrated REST APIs, implemented dynamic data rendering, and collaborated on improving website functionality, responsiveness, and user experience.
